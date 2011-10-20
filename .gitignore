@@ -1,3 +1,4 @@
 # Ignore objects.
 *.o
 *.cf
+tb_mips
