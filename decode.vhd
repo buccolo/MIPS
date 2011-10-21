@@ -3,47 +3,49 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 use ieee.std_logic_arith.all;
 
+-- NOTA: Tomei como base esse diagrama: http://cl.ly/2d471L1D3Z3s0m1q0g0s
+
 entity decode is
 	generic(
 		nbits	: positive	:= 32;
 	);
 	port(
-		clk				: in std_logic;
+		clk			: in std_logic;
 
 		-- Preciosa instrucao
-		InstrD			: in std_logic_vector(nbits-1 downto 0);
+		InstrD		: in std_logic_vector(nbits-1 downto 0);
 
 		-- Repassando o PCPlus4
-		PCPlus4F		: in std_logic_vector(nbits-1 downto 0);
-		PCPlus4D		: out std_logic_vector(nbits-1 downto 0);
+		PCPlus4F	: in std_logic_vector(nbits-1 downto 0);
+		PCPlus4D	: out std_logic_vector(nbits-1 downto 0);
 
 		-- RegFile: sinal de enable, vem do Writeback		
-		RegWriteW		: in std_logic;
+		RegWriteW	: in std_logic;
 
 		-- RegFile: sinal de WD3
-		ResultW			: in std_logic_vector(nbits-1 downto 0);
+		ResultW		: in std_logic_vector(nbits-1 downto 0);
 
 		-- RegFile: saidas
-		RD1D			: out std_logic_vector(nbits-1 downto 0)		
-		RD2D			: out std_logic_vector(nbits-1 downto 0)
+		RD1D		: out std_logic_vector(nbits-1 downto 0)		
+		RD2D		: out std_logic_vector(nbits-1 downto 0)
 
 		-- Saidas extras
-		RtED			: out std_logic_vector(4 downto 0);
-		RdED			: out std_logic_vector(4 downto 0);
+		RtED		: out std_logic_vector(4 downto 0);
+		RdED		: out std_logic_vector(4 downto 0);
 
 		-- SignExtender
-		SignImmD		: out std_logic_vector(nbits-1 downto 0)
+		SignImmD	: out std_logic_vector(nbits-1 downto 0)
 
 		-- ControlUnit: Saidas
-		RegWriteD		: out std_logic;
-		MemtoRegD		: out std_logic;
-		MemWriteD		: out std_logic;
-		ALUControlD		: out std_logic;
-		ALUSrcD			: out std_logic;
-		RegDstD			: out std_logic;
-		BranchD			: out std_logic;
-		JumpD			: out std_logic;
-		JalD			: out std_logic;
+		RegWriteD	: out std_logic;
+		MemtoRegD	: out std_logic;
+		MemWriteD	: out std_logic;
+		ALUControlD	: out std_logic;
+		ALUSrcD		: out std_logic;
+		RegDstD		: out std_logic;
+		BranchD		: out std_logic;
+		JumpD		: out std_logic;
+		JalD		: out std_logic;
 
 	);
 end decode;	
@@ -117,7 +119,7 @@ begin
 
 	rf_0: RF port map (A1,A2,A3,WD3,clk,We3,RD1D,RD2D);
 
-	-- TODO: Verificar isso aqui, achei no DDCA.pdf pag 423.
+	-- TODO: Verificar isso aqui, achei no DDCA.pdf pag 423. La o X eh para falar que ta em hexa!
 	SignImmD <= "0000000000000000" & InstrD(15 downto 0) when InstrD(15) = '0' else "1111111111111111" & InstrD(15 downto 0);
 
 	-- Saidas extras
