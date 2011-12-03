@@ -9,6 +9,7 @@ entity fetch is
 	);
 	port(
 		PCBranchD	: in std_logic_vector(nbits-1 downto 0);
+		PCJump28	: in std_logic_vector(nbits-5 downto 0);
 		PCSrcD		: in std_logic;
 		clk			: in std_logic;		
 		reset		: in std_logic;
@@ -21,6 +22,8 @@ end fetch;
 architecture fetch_arc of fetch is
 	signal PCPlus4F	: std_logic_vector(nbits-1 downto 0);
 	signal PClinha	: std_logic_vector(nbits-1 downto 0);
+	signal PCNormal	: std_logic_vector(nbits-1 downto 0);
+	signal PCJump	: std_logic_vector(nbits-1 downto 0);
 	
 	component mux2
 		port(
@@ -35,8 +38,11 @@ begin
 	-- calculando PC + 4
 	PCPlus4F <= PCF + 4;
 	
-	-- mux para decidir qual é a proxima instrução
-	pc: mux2 port map (PCPlus4, PCBranchD, PCSrcD, PCLinha);
+	pcnorm	: mux2 port map (PCPlus4F, PCBranchD, PCSrcD, PCNormal);
+	
+	PCJump <= PCPlus4F(nbits-1 downto nbits-5) & PCJump28;
+	
+	pc		: mux2 port map (PCNormal, PCJump, Jump, PCLinha);
 	
 	
 	process(clk) begin
