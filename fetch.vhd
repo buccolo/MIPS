@@ -14,13 +14,13 @@ entity fetch is
 		clk			: in std_logic;		
 		reset		: in std_logic;
 		PCF			: out std_logic_vector(nbits-1 downto 0);
-		PCPlus4		: out std_logic_vector(nbits-1 downto 0);
+		PCPlus4F	: out std_logic_vector(nbits-1 downto 0)
 
 	);
 end fetch;	
 	
 architecture fetch_arc of fetch is
-	signal PCPlus4F	: std_logic_vector(nbits-1 downto 0);
+	signal PCPlus4	: std_logic_vector(nbits-1 downto 0);
 	signal PClinha	: std_logic_vector(nbits-1 downto 0);
 	signal PCNormal	: std_logic_vector(nbits-1 downto 0);
 	signal PCJump	: std_logic_vector(nbits-1 downto 0);
@@ -37,10 +37,11 @@ begin
 	
 	-- calculando PC + 4
 	PCPlus4F <= PCF + 4;
+	PCPlus4 <= PCPlus4F;
 	
-	pcnorm	: mux2 port map (PCPlus4F, PCBranchD, PCSrcD, PCNormal);
+	pcnorm	: mux2 port map (PCPlus4, PCBranchD, PCSrcD, PCNormal);
 	
-	PCJump <= PCPlus4F(nbits-1 downto nbits-5) & PCJump28;
+	PCJump <= PCPlus4(nbits-1 downto nbits-5) & PCJump28;
 	
 	pc		: mux2 port map (PCNormal, PCJump, Jump, PCLinha);
 	
