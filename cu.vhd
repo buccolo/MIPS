@@ -17,10 +17,13 @@ entity CU is
 	);
 end CU;
 
-architecture CU_arc of CU is
+architecture CU_arc of CU is 
 
 begin
 
+process
+ 
+begin
 	case Op is
 		-- R-type instruction
 		when "000000" =>
@@ -67,6 +70,7 @@ begin
 		-- j
 		when "000010" =>
 		
+		-- TODO: JAL e BEQ tem o mesmo opcode!?
 		-- jal
 		when "000100" =>
 		
@@ -78,5 +82,7 @@ begin
 		when others => null;
 
 	end case;
+
+end process;
 
 end;
