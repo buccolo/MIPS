@@ -5,7 +5,7 @@ use ieee.std_logic_arith.all;
 
 entity fetch is
 	generic(
-		nbits	: positive	:= 32;
+		nbits	: positive	:= 32
 	);
 	port(
 		PCBranchD	: in std_logic_vector(nbits-1 downto 0);
@@ -13,10 +13,10 @@ entity fetch is
 		PCSrcD		: in std_logic;
 		clk			: in std_logic;		
 		reset		: in std_logic;
-		Instruction	: in std_logic_vector(nbits-1 downto 0)
+		Instruction	: in std_logic_vector(nbits-1 downto 0);
 		PCF			: out std_logic_vector(nbits-1 downto 0);
 		PCPlus4F	: out std_logic_vector(nbits-1 downto 0);
-		InstrD	: out std_logic_vector(nbits-1 downto 0)
+		InstrD	    : out std_logic_vector(nbits-1 downto 0)
 	);
 end fetch;	
 	
@@ -37,6 +37,8 @@ architecture fetch_arc of fetch is
 begin
 	
 	-- calculando PC + 4
+    -- TODO: Alhao: Isso aqui ta errado, PCF eh saida!!
+    -- TODO: Alhao: e na linha debaixo tem que usar variable, com signal nao da certo issoae.
 	PCPlus4F <= PCF + 4;
 	PCPlus4 <= PCPlus4F;
 	
