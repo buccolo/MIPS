@@ -1,11 +1,12 @@
 library ieee; 
+use ieee.numeric_std.all;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 use ieee.std_logic_arith.all;
 
 entity memory is
 	generic(
-		nbits	: positive	:= 32;
+		nbits	: positive	:= 32
 	);
 	port(
 		clk			: in std_logic;
@@ -31,7 +32,7 @@ entity memory is
 		-- PC
 		PCBranchE	: in std_logic_vector(31 downto 0);
 		PCBranchM	: out std_logic_vector(31 downto 0);
-		PCSrcM		: out std_logic_vector;
+		PCSrcM		: out std_logic;
 
 		-- Memory
 		ReadDataM	: out std_logic_vector(31 downto 0);
@@ -62,6 +63,6 @@ begin
 	-- MemoriaA 	<= AluOutE;
 	-- MemoriaWD	<= WriteDataE;
 	-- MemoriaWE	<= MemWriteE;
-	ReadDataM <= null; -- ??? 
+	-- ReadDataM 	<= null; -- ??? 
 
 end;
