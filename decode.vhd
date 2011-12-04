@@ -28,8 +28,6 @@ entity decode is
 		-- RegFile: saidas
 		RD1D		: out std_logic_vector(nbits-1 downto 0)		
 		RD2D		: out std_logic_vector(nbits-1 downto 0)
-
-		-- Saidas extras
 		RtD			: out std_logic_vector(4 downto 0);
 		RdD			: out std_logic_vector(4 downto 0);
 
@@ -122,7 +120,7 @@ begin
 	-- TODO: Verificar isso aqui, achei no DDCA.pdf pag 423. La o X eh para falar que ta em hexa!
 	SignImmD <= "0000000000000000" & InstrD(15 downto 0) when InstrD(15) = '0' else "1111111111111111" & InstrD(15 downto 0);
 
-	-- Saidas extras
+	-- RegFile
 	RtD <= InstrD(20 downto 16);
 	RdD <= InstrD(15 downto 11);
 

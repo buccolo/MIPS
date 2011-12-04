@@ -35,16 +35,17 @@ entity execute is
 		RD1D		: in std_logic_vector(31 downto 0);
 		RD2D		: in std_logic_vector(31 downto 0);
 
-		-- Outras entradas
-		RtD			: in std_logic_vector(4 downto 0);
-		RdD			: in std_logic_vector(4 downto 0);
+		-- PC
+		PCBranchE	: out std_logic_vector(31 downto 0);
 		SignImmD	: in std_logic_vector(31 downto 0);
 		PCPlus4D	: in std_logic_vector(31 downto 0);
 
-		-- Outras saidas
+		-- RegFile
+		RtD			: in std_logic_vector(4 downto 0);
+		RdD			: in std_logic_vector(4 downto 0);
 		WriteDataE	: out std_logic_vector(31 downto 0);
-		WriteRegE	: out std_logic_vector(4 downto 0);
-		PCBranchE	: out std_logic_vector(31 downto 0)
+		WriteRegE	: out std_logic_vector(4 downto 0)
+		
 	);
 end execute;
 
@@ -82,7 +83,7 @@ begin
 	-- Nao precisamos dos ultimos sinais, era pra ser Overflow e CarryOut
 	alu_0: ALU port map (SrcAE,SrcBE,AluControlD,AluOutE,ZeroE,null,null);
 
-	-- Outros
+	-- RegFile
 	WriteDataE	<= R2D2;
 	WriteRegE 	<= RtD when RegDstD = '0' else RdD; -- outro mux
 	

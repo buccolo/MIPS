@@ -23,12 +23,13 @@ entity memory is
 		AluOutE		: in std_logic_vector(31 downto 0);
 		AluOutM		: out std_logic_vector(31 downto 0);
 
-		-- Outras 
+		-- RegFile 
 		WriteDataE	: in std_logic_vector(31 downto 0);
 		WriteRegE	: in std_logic_vector(4 downto 0);
-		PCBranchE	: in std_logic_vector(31 downto 0);
-		
 		WriteRegM	: out std_logic_vector(4 downto 0);
+
+		-- PC
+		PCBranchE	: in std_logic_vector(31 downto 0);
 		PCBranchM	: out std_logic_vector(31 downto 0);
 		PCSrcM		: out std_logic_vector;
 
