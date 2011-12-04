@@ -30,8 +30,8 @@ entity decode is
 		RD2D		: out std_logic_vector(nbits-1 downto 0)
 
 		-- Saidas extras
-		RtED		: out std_logic_vector(4 downto 0);
-		RdED		: out std_logic_vector(4 downto 0);
+		RtD			: out std_logic_vector(4 downto 0);
+		RdD			: out std_logic_vector(4 downto 0);
 
 		-- SignExtender
 		SignImmD	: out std_logic_vector(nbits-1 downto 0)
@@ -123,8 +123,8 @@ begin
 	SignImmD <= "0000000000000000" & InstrD(15 downto 0) when InstrD(15) = '0' else "1111111111111111" & InstrD(15 downto 0);
 
 	-- Saidas extras
-	RtED <= InstrD(20 downto 16);
-	RdED <= InstrD(15 downto 11);
+	RtD <= InstrD(20 downto 16);
+	RdD <= InstrD(15 downto 11);
 
 	-- Repassa o PCPlus4 
 	PCPlus4D <= PCPlus4F;
