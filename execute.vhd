@@ -5,7 +5,7 @@ use ieee.std_logic_arith.all;
 
 entity execute is
 	generic(
-		nbits	: positive	:= 32;
+		nbits	: positive	:= 32
 	);
 	port(
 		clk		: in std_logic;
@@ -14,7 +14,7 @@ entity execute is
 		RegWriteD	: in std_logic;
 		MemtoRegD	: in std_logic;
 		MemWriteD	: in std_logic;
-		ALUControlD	: in std_logic;
+		ALUControlD	: in std_logic_vector(2 downto 0);
 		ALUSrcD		: in std_logic;
 		RegDstD		: in std_logic;
 		BranchD		: in std_logic;
@@ -54,7 +54,8 @@ architecture execute_arc of execute is
 	-- ALU --
 	signal SrcAE		: std_logic_vector(31 downto 0);
 	signal SrcBE		: std_logic_vector(31 downto 0);
-	signal AluControlE	: std_logic_vector(2 downto 0); 	
+	signal AluControlE	: std_logic_vector(2 downto 0); 
+	signal IGNORE		: std_logic;
 
 	component ALU is
 		generic(
@@ -78,16 +79,16 @@ begin
 	-- ALU -- 
 	---------
 	SrcAE <= RD1D;
-	SrcBE <= RD2D when ALUSrcE = '0' else SignImmD; -- Isso podia ser um Mux, mas eu sou rebelde.
+	SrcBE <= RD2D when ALUSrcD = '0' else SignImmD; -- Isso podia ser um Mux, mas eu sou rebelde.
 
-	-- Nao precisamos dos ultimos sinais, era pra ser Overflow e CarryOut
-	alu_0: ALU port map (SrcAE,SrcBE,AluControlD,AluOutE,ZeroE,null,null);
+	-- Ignorando os ultimos dois sinais: Overflow e CarryOut
+	alu_0: ALU port map (SrcAE,SrcBE,AluControlD,AluOutE,ZeroE,IGNORE,IGNORE);
 
 	-- RegFile
-	WriteDataE	<= R2D2;
+	WriteDataE	<= RD2D;
 	WriteRegE 	<= RtD when RegDstD = '0' else RdD; -- outro mux
 	
 	-- Shift Left Like a Boss: DDCA.pdf, pag 423
-	PCBranchE <= (SignImmE(29 downto 0) & "00") + PCPlus4D;
+	PCBranchE <= (SignImmD(29 downto 0) & "00") + PCPlus4D;
 
 end;
