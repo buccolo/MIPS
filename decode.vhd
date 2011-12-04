@@ -7,7 +7,7 @@ use ieee.std_logic_arith.all;
 
 entity decode is
 	generic(
-		nbits	: positive	:= 32;
+		nbits	: positive	:= 32
 	);
 	port(
 		clk			: in std_logic;
@@ -21,6 +21,7 @@ entity decode is
 
 		-- RegFile: sinal de enable, vem do Writeback		
 		RegWriteW	: in std_logic;
+		WriteRegW	: in std_logic_vector(4 downto 0); 
 
 		-- RegFile: sinal de WD3
 		ResultW		: in std_logic_vector(nbits-1 downto 0);
@@ -38,12 +39,12 @@ entity decode is
 		RegWriteD	: out std_logic;
 		MemtoRegD	: out std_logic;
 		MemWriteD	: out std_logic;
-		ALUControlD	: out std_logic;
+		ALUControlD	: out std_logic_vector (2 downto 0);
 		ALUSrcD		: out std_logic;
 		RegDstD		: out std_logic;
 		BranchD		: out std_logic;
 		JumpD		: out std_logic;
-		JalD		: out std_logic;
+		JalD		: out std_logic
 
 	);
 end decode;	
