@@ -5,7 +5,7 @@ use ieee.std_logic_arith.all;
 
 entity writeback is
 	generic(
-		nbits	: positive	:= 32;
+		nbits	: positive	:= 32
 	);
 	port(
 		clk			: in std_logic;
