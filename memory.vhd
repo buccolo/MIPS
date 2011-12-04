@@ -21,7 +21,7 @@ entity memory is
 		-- ALU
 		ZeroE		: in std_logic;
 		AluOutE		: in std_logic_vector(31 downto 0);
-		AluOutM		: out std_logic_vector(31 downto 0)
+		AluOutM		: out std_logic_vector(31 downto 0);
 
 		-- Outras 
 		WriteDataE	: in std_logic_vector(31 downto 0);
