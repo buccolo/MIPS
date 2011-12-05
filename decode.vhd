@@ -26,13 +26,13 @@ entity decode is
 		ResultW		: in std_logic_vector(nbits-1 downto 0);
 
 		-- RegFile: saidas
-		RD1D		: out std_logic_vector(nbits-1 downto 0)		
-		RD2D		: out std_logic_vector(nbits-1 downto 0)
+		RD1D		: out std_logic_vector(nbits-1 downto 0);
+		RD2D		: out std_logic_vector(nbits-1 downto 0);
 		RtD			: out std_logic_vector(4 downto 0);
 		RdD			: out std_logic_vector(4 downto 0);
 
 		-- SignExtender
-		SignImmD	: out std_logic_vector(nbits-1 downto 0)
+		SignImmD	: out std_logic_vector(nbits-1 downto 0);
 
 		-- ControlUnit: Saidas
 		RegWriteD	: out std_logic;

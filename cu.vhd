@@ -24,6 +24,36 @@ begin
 	case Op is
 		-- R-type instruction
 		when "000000" =>
+			case Funct is
+				-- add
+				when "100000"=>
+
+				-- addu
+				when "100001"=>
+
+				-- sub
+				when "100010"=>
+
+				-- subu
+				when "100011"=>
+
+				-- and
+				when "100100"=>
+
+				-- or
+				when "100101"=>
+
+				-- xor
+				when "100110"=>
+
+				-- slt
+				when "101010"=>
+
+				-- sltu
+				when "101011"=>
+
+				when others => null;
+			end case;
 		
 		-- lw
 		when "100011" =>
