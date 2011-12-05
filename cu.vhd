@@ -72,6 +72,8 @@ begin
 		
 		-- beq
 		when "000100" =>
+
+		-- TODO: faltou o subi, essa porra existe mesmo??
 		
 		when others => null;
 
