@@ -13,9 +13,10 @@ entity fetch is
 		PCSrcD		: in std_logic;
 		clk			: in std_logic;		
 		reset		: in std_logic;
+		Instruction	: in std_logic_vector(nbits-1 downto 0)
 		PCF			: out std_logic_vector(nbits-1 downto 0);
-		PCPlus4F	: out std_logic_vector(nbits-1 downto 0)
-
+		PCPlus4F	: out std_logic_vector(nbits-1 downto 0);
+		InstrD	: out std_logic_vector(nbits-1 downto 0)
 	);
 end fetch;	
 	
@@ -42,6 +43,9 @@ begin
 	pcnorm	: mux2 port map (PCPlus4, PCBranchD, PCSrcD, PCNormal);
 	
 	PCJump <= PCPlus4(nbits-1 downto nbits-5) & PCJump28;
+
+	-- Workaround para receber o InstrD diretamente da entrada do MIPS
+	InstrD <= Instruction;
 	
 	pc		: mux2 port map (PCNormal, PCJump, Jump, PCLinha);
 	
@@ -49,7 +53,7 @@ begin
 	process(clk) begin
 	
 		if(reset = '1') then
-			PCLinha <= "0H"; 									--não sei como passar esse valor!!!!
+			PCLinha <= "0H"; 									-- TODO: não sei como passar esse valor!!!!
 		end if;
 	
 		-- Rising Edge of the clock

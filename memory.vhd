@@ -34,7 +34,10 @@ entity memory is
 		PCSrcM		: out std_logic_vector;
 
 		-- Memory
-		ReadDataM	: out std_logic_vector(31 downto 0)
+		ReadDataM	: out std_logic_vector(31 downto 0);
+
+		-- Migué de receber a memory direto da entrada do MIPS
+		Data		: in std_logic_vector(31 downto 0)
 		
 	);
 end memory;
@@ -53,7 +56,9 @@ begin
 	RegWriteM	<= RegWriteE;
 	MemtoRegM	<= MemtoRegE;
 
-	-- TODO: MEMORIA: Nao lembro o migue que eh pra dar, ele diz que nao eh pra implementar
+	-- Buccolo: MEMORIA: Nao lembro o migue que eh pra dar, ele diz que nao eh pra implementar
+	-- TODO:  Richard: Done! Só precisa ver se a variável é a certa
+	ReadDataM <= Data;
 	-- MemoriaA 	<= AluOutE;
 	-- MemoriaWD	<= WriteDataE;
 	-- MemoriaWE	<= MemWriteE;
