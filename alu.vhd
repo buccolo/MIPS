@@ -12,7 +12,7 @@ entity ALU is
 	port(
 		SrcA				: in std_logic_vector(W-1 downto 0);
 		SrcB				: in std_logic_vector(W-1 downto 0);
-		AluControl	: in std_logic_vector(2 downto 0);
+		AluControl	: in std_logic_vector(3 downto 0);
 		AluResult		: out std_logic_vector(W-1 downto 0);
 		Zero				: out std_logic;
 		Overflow		: out std_logic;
@@ -24,14 +24,15 @@ end ALU;
 -- +------------------------+
 -- |	Lista de Operacoes		|
 -- +------------------------+
--- |	000 	|			A & B			|
--- |	001 	|			A | B			|
--- |	010 	|			A + B			|
--- |	011 	|		Not used		|
--- |	100 	|		A & not B		|
--- |	101 	|		A | not B		|
--- |	110 	|			A - B			|
--- |	111 	|			SLT				|
+-- |	0000 	|			A & B			|
+-- |	0001 	|			A | B			|
+-- |	0010 	|			A + B			|
+-- |	0011 	|		Not used		|
+-- |	0100 	|		A & not B		|
+-- |	0101 	|		A | not B		|
+-- |	0110 	|			A - B			|
+-- |	0111 	|			SLT				|
+-- |	1000 	|		A XOR	B			|
 -- +------------------------+
 
 architecture arc_alu of ALU is begin
@@ -45,7 +46,7 @@ process (AluControl, SrcA, SrcB)
 	begin
 		
 		-- A AND B --------------------------------------------------------------------------------------
-		if(AluControl = "000") then
+		if(AluControl = "0000") then
 			TempLogic := SrcA AND SrcB;
 			AluResult <= TempLogic;
 
@@ -56,7 +57,7 @@ process (AluControl, SrcA, SrcB)
 			end if;
 		
 		-- A OR B	--------------------------------------------------------------------------------------
-		elsif (AluControl = "001") then 
+		elsif (AluControl = "0001") then 
 			TempLogic := SrcA OR SrcB;
 			AluResult <= TempLogic;
 
@@ -67,7 +68,7 @@ process (AluControl, SrcA, SrcB)
 			end if;
 
 		-- A + B --------------------------------------------------------------------------------------
-		elsif (AluControl = "010") then
+		elsif (AluControl = "0010") then
 
 			Big := ( '0' & SrcA ) + ( '0' & SrcB );
 			CarryOut <= Big(32);
@@ -83,7 +84,7 @@ process (AluControl, SrcA, SrcB)
 			end if;	
 		
 		-- A AND NOT B --------------------------------------------------------------------------------------
-		elsif (AluControl = "100") then
+		elsif (AluControl = "0100") then
 			TempLogic := SrcA AND NOT SrcB;
 			AluResult <= TempLogic;
 
@@ -94,7 +95,7 @@ process (AluControl, SrcA, SrcB)
 			end if;
 
 		-- A OR NOT B --------------------------------------------------------------------------------------
-		elsif (AluControl = "101") then
+		elsif (AluControl = "0101") then
 			TempLogic := SrcA OR NOT SrcB;
 			AluResult <= TempLogic;
 
@@ -105,7 +106,7 @@ process (AluControl, SrcA, SrcB)
 			end if;
 
 		-- A - B --------------------------------------------------------------------------------------
-		elsif (AluControl = "110") then
+		elsif (AluControl = "0110") then
 
 			-- Transforma o B em C2
 			SrcBNeg := ("11111111111111111111111111111111" - SrcB) + "00000000000000000000000000000001";
@@ -126,7 +127,7 @@ process (AluControl, SrcA, SrcB)
 			end if;	
 
 		-- A SLT B --------------------------------------------------------------------------------------
-		elsif (AluControl = "111") then 
+		elsif (AluControl = "0111") then 
 			if (SrcA < SrcB) then
 				AluResult <= SrcA;
 				if (SrcA = "00000000000000000000000000000000") then
@@ -142,6 +143,9 @@ process (AluControl, SrcA, SrcB)
 					Zero <= '0';
 				end if;
 			end if;
+		-- A XOR B --------------------------------------------------------------------------------------
+		elsif (AluControl = "1000") then
+			AluResult <= SrcA XOR SrcB;
 		end if;
 
 end process;
