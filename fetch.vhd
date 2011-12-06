@@ -12,6 +12,10 @@ entity fetch is
 		-- Control Unit
 		Jump		: in std_logic;
 		
+		-- Instruction
+		Instruction	: in std_logic_vector(nbits-1 downto 0);
+		InstructionF: out std_logic_vector(nbits-1 downto 0);
+		
 		-- Decode
 		PCBranchD	: in std_logic_vector(nbits-1 downto 0);	-- Endereço da instrução para pular caso haja BRANCH
 		PCJump28D	: in std_logic_vector(nbits-5 downto 0); 	-- 28bits do endereço para pular caso haja JUMP
@@ -57,6 +61,8 @@ begin
 	-- calculando PC + 4 (na variavel auxiliar e já passando para a saída)
 	PCPlus4 <= PCF + 4;
 	FPCPlus4 <= PCPlus4;
+	
+	InstructionF <= Instruction;
 	
 	PCFF <= PCF;
 	
