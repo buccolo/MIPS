@@ -32,7 +32,10 @@ entity memory is
 		ReadDataM	: out std_logic_vector(31 downto 0);
 
 		-- Migué de receber a memory direto da entrada do MIPS
-		Data		: in std_logic_vector(31 downto 0)
+		Data		: in std_logic_vector(31 downto 0);
+		
+		-- Reset
+		reset		: in std_logic
 		
 	);
 end memory;

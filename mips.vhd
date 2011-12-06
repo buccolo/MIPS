@@ -36,25 +36,6 @@ end mips;
   
 architecture arc_mips of mips is
 
-
-component ALU is 
-	generic(
-		W : natural := 32; 
-		Cw	: natural := 3
-	);
-	port(
-		SrcA				: in std_logic_vector(W-1 downto 0);
-		SrcB				: in std_logic_vector(W-1 downto 0);
-		AluControl	: in std_logic_vector(3 downto 0);
-		AluResult		: out std_logic_vector(W-1 downto 0);
-		Zero				: out std_logic;
-		Overflow		: out std_logic;
-		CarryOut		: out std_logic
-	);	
-
-end component;
-
-
 component fetch is
 	generic(
 		nbits	: positive	:= 32
@@ -120,7 +101,10 @@ component decode is
 
 		-- PC
 		PCSrcD		: out std_logic;
-		PCBranchD	: out std_logic_vector(nbits-1 downto 0)
+		PCBranchD	: out std_logic_vector(nbits-1 downto 0);
+		
+		-- Reset
+		reset		: in std_logic
 
 	);
 end component;	
@@ -160,7 +144,10 @@ component execute is
 
 		-- Sign Extend
 		SignImmD	: in std_logic_vector(nbits-1 downto 0);
-		WriteRegE	: out std_logic_vector(4 downto 0)
+		WriteRegE	: out std_logic_vector(4 downto 0);
+		
+		-- Reset
+		reset		: in std_logic
 		
 	);
 end component;
@@ -194,7 +181,10 @@ component memory is
 		ReadDataM	: out std_logic_vector(31 downto 0);
 
 		-- Migué de receber a memory direto da entrada do MIPS
-		Data		: in std_logic_vector(31 downto 0)
+		Data		: in std_logic_vector(31 downto 0);
+		
+		-- Reset
+		reset		: in std_logic
 		
 	);
 end component;
@@ -221,11 +211,131 @@ component writeback is
 		WriteRegW	: out std_logic_vector(4 downto 0);
 
 		-- Memory
-		ReadDataM	: in std_logic_vector(31 downto 0)
+		ReadDataM	: in std_logic_vector(31 downto 0);
+		
+		-- Reset
+		reset		: in std_logic
 	);
 end component;
-	-- signals de auxilio
+
+-----------------------------------------------------------
+
+-----------------------------------------------------------
+
+
+--- FETCH ---
+-- Entradas do Fetch
+signal Jump_F		: std_logic;
+signal PCBranchD_F	: std_logic_vector(nbits-1 downto 0);
+signal PCJump28D_F	: std_logic_vector(nbits-1 downto 0);
+signal PCSrcD_F		: std_logic;
+-- Saidas do Fetch
+signal F_FPCPlus4	: std_logic_vector(nbits-1 downto 0);
+signal F_PCFF		: std_logic_vector(nbits-1 downto 0);
+
+--- DECODE ---
+-- Entradas do Decode
+signal PCPlus4F_D	: std_logic_vector(nbits-1 downto 0);
+signal RegWriteW_D	: std_logic;
+signal WriteRegW_D	: std_logic_vector(4 downto 0);
+signal ResultW_D		: std_logic_vector(nbits-1 downto 0);
+-- Saídas do Decode
+signal D_RD1D		: std_logic_vector(nbits-1 downto 0);
+signal D_RD2D		: std_logic_vector(nbits-1 downto 0);
+signal D_RtD		: std_logic_vector(4 downto 0);
+signal D_RdD		: std_logic_vector(4 downto 0);
+signal D_SignImmD	: std_logic_vector(nbits-1 downto 0);
+signal D_RegWriteD	: std_logic;
+signal D_MemtoRegD	: std_logic;
+signal D_MemWriteD	: std_logic;
+signal D_ALUControlD: std_logic_vector (3 downto 0);
+signal D_ALUSrcD	: std_logic;
+signal D_RegDstD	: std_logic_vector(1 downto 0);
+signal D_JumpD		: std_logic;
+signal D_JalD		: std_logic;
+signal D_PCSrcD		: std_logic;
+signal D_PCBranchD	: std_logic_vector(nbits-1 downto 0);
+
+--- EXECUTE ----
+-- Entradas do Execute
+signal RegWriteD_E			: std_logic;
+signal MemtoRegD_E			: std_logic;
+signal MemWriteD_E			: std_logic;
+signal ALUControlD_E		: std_logic_vector(3 downto 0);
+signal ALUSrcD_E			: std_logic;
+signal RegDstD_E			: std_logic_vector(1 downto 0);
+signal RD1D_E				: std_logic_vector(31 downto 0);
+signal RD2D_E				: std_logic_vector(31 downto 0);
+signal RtD_E				: std_logic_vector(4 downto 0);
+signal RdD_E				: std_logic_vector(4 downto 0);
+signal SignImmD_E			: std_logic_vector(nbits-1 downto 0);
+
+-- Saídas do Execute
+signal E_RegWriteE			: std_logic;
+signal E_MemtoRegE			: std_logic;
+signal E_MemWriteE			: std_logic;
+signal E_ZeroE				: std_logic;
+signal E_AluOutE			: std_logic_vector(31 downto 0);
+signal E_WriteDataE			: std_logic_vector(31 downto 0);
+signal E_WriteRegE			: std_logic_vector(4 downto 0);
+
+--- MEMORY ---
+signal RegWriteE_M	: std_logic;
+signal MemtoRegE_M	: std_logic;
+signal MemWriteE_M	: std_logic;
+signal M_RegWriteM	: std_logic;
+signal M_MemtoRegM	: std_logic;
+signal ZeroE_M		: std_logic;
+signal AluOutE_M	: std_logic_vector(31 downto 0);
+signal M_AluOutM	: std_logic_vector(31 downto 0);
+signal WriteDataE_M	: std_logic_vector(31 downto 0);
+signal WriteRegE_M	: std_logic_vector(4 downto 0);
+signal M_WriteRegM	: std_logic_vector(4 downto 0);
+signal M_ReadDataM	: std_logic_vector(31 downto 0);
+signal Data_M		: std_logic_vector(31 downto 0);
+
+-- WRITEBACK ---
+-- Control Unit
+signal RegWriteM_W	: std_logic;
+signal MemtoRegM_W	: std_logic;
+signal W_RegWriteW	: std_logic;
+signal AluOutM_W	: std_logic_vector(31 downto 0);
+signal W_ResultW	: std_logic_vector(31 downto 0);
+signal WriteRegM_W	: std_logic_vector(4 downto 0);
+signal W_WriteRegW	: std_logic_vector(4 downto 0);
+signal ReadDataM_W	: std_logic_vector(31 downto 0);
+
+
 begin
 	
+
+fetch_0: Fetch port map(Jump_F, PCBranchD_F, PCJump28D_F, PCSrcD_F, F_FPCPlus4, F_PCFF, clk, reset);
+
+decode_0: Decode port map(clk, Instruction, PCPlus4F_D, RegWriteW_D, WriteRegW_D, ResultW_D, D_RD1D, D_RD2D, D_RtD, D_RdD, D_SignImmD, D_RegWriteD, D_MemtoRegD, D_MemWriteD, D_ALUControlD, D_ALUSrcD, D_RegDstD, D_JumpD, D_JalD, D_PCSrcD, D_PCBranchD, reset);
+
+execute_0: Execute port map(clk, RegWriteD_E, MemtoRegD_E, MemWriteD_E, ALUControlD_E, ALUSrcD_E, RegDstD_E, E_RegWriteE, E_MemtoRegE, E_MemWriteE, E_ZeroE, E_AluOutE, RD1D_E, RD2D_E, RtD_E, RdD_E, E_WriteDataE, SignImmD_E, E_WriteRegE, reset);
+
+memory_0: Memory port map(clk, RegWriteE_M, MemtoRegE_M, MemWriteE_M, M_RegWriteM, M_MemtoRegM, ZeroE_M, AluOutE_M, M_AluOutM, WriteDataE_M, WriteRegE_M, M_WriteRegM, M_ReadDataM, Data_M, reset);
+
+writeback_0: Writeback port map(clk, RegWriteM_W, MemtoRegM_W, W_RegWriteW, AluOutM_W, W_ResultW, WriteRegM_W, W_WriteRegW, ReadDataM_W, reset);
+
+
+process(clk)
+begin 
+	if clk'EVENT and clk = '1' then
+	
+		-- Troca troca
+		
+	
+	end if;
+end process;
+
+
+
+
+
+
+
+
 
 end;

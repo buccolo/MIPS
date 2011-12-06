@@ -46,7 +46,10 @@ entity decode is
 
 		-- PC
 		PCSrcD		: out std_logic;
-		PCBranchD	: out std_logic_vector(nbits-1 downto 0)
+		PCBranchD	: out std_logic_vector(nbits-1 downto 0);
+		
+		-- Reset
+		reset		: in std_logic
 
 	);
 end decode;	

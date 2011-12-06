@@ -24,7 +24,10 @@ entity writeback is
 		WriteRegW	: out std_logic_vector(4 downto 0);
 
 		-- Memory
-		ReadDataM	: in std_logic_vector(31 downto 0)
+		ReadDataM	: in std_logic_vector(31 downto 0);
+		
+		-- Reset
+		reset		: in std_logic
 	);
 end writeback;
 

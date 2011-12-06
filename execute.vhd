@@ -38,7 +38,10 @@ entity execute is
 
 		-- Sign Extend
 		SignImmD	: in std_logic_vector(nbits-1 downto 0);
-		WriteRegE	: out std_logic_vector(4 downto 0)
+		WriteRegE	: out std_logic_vector(4 downto 0);
+		
+		-- Reset
+		reset		: in std_logic;
 		
 	);
 end execute;
