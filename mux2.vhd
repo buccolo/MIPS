@@ -6,9 +6,9 @@ entity mux2 is
 		nbits	: positive := 32
 	);
 	port(
-		d0, d1	: in STD_LOGIC_VECTOR(nbits downto 0);
+		d0, d1	: in STD_LOGIC_VECTOR(nbits-1 downto 0);
 		s		: in STD_LOGIC;
-		y		: out STD_LOGIC_VECTOR(nbits downto 0)
+		y		: out STD_LOGIC_VECTOR(nbits-1 downto 0)
 	);
 end mux2;
 

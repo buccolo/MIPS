@@ -233,7 +233,7 @@ end component;
 signal F_InstructionF	: std_logic_vector(nbits-1 downto 0);
 signal Jump_F			: std_logic;
 signal PCBranchD_F		: std_logic_vector(nbits-1 downto 0);
-signal PCJump28D_F		: std_logic_vector(nbits-1 downto 0);
+signal PCJump28D_F		: std_logic_vector(nbits-5 downto 0);
 signal PCSrcD_F			: std_logic;
 -- Saidas do Fetch
 signal F_FPCPlus4		: std_logic_vector(nbits-1 downto 0);

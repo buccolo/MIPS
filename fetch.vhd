@@ -66,14 +66,13 @@ begin
 	
 	PCFF <= PCF;
 	
-	-- mux para decidir se o branch deve ser tomado
-	pcnorm	: mux2 port map (PCPlus4, PCBranchD, PCSrcD, PCNormal);
-	
+	PCNormal <= PCPlus4 when PCSrcD = '0' else PCBranchD;
+
 	-- Calcula o endereço para o PC caso haja um Jump
-	PCJump <= PCPlus4(nbits-1 downto nbits-5) & PCJump28D;
+	PCJump <= PCPlus4(31 downto 28) & PCJump28D;
 	
 	-- Mux para decidir se é um Jump (a saída é o PC', que é o próximo endereço)
-	pc		: mux2 port map (PCNormal, PCJump, Jump, PCLinha);
+	PCLinha <= PCNormal when Jump = '0' else PCJump;
 	
 	
 	process(clk) begin
