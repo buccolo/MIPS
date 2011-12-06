@@ -46,7 +46,7 @@ entity decode is
 
 		-- PC
 		PCSrcD		: out std_logic;
-		PCBranchD	: out std_logic
+		PCBranchD	: out std_logic_vector(nbits-1 downto 0)
 
 	);
 end decode;	
