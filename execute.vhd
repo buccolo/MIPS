@@ -41,7 +41,7 @@ entity execute is
 		WriteRegE	: out std_logic_vector(4 downto 0);
 		
 		-- Reset
-		reset		: in std_logic;
+		reset		: in std_logic
 		
 	);
 end execute;

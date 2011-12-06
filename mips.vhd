@@ -106,6 +106,7 @@ component decode is
 		-- PC
 		PCSrcD		: out std_logic;
 		PCBranchD	: out std_logic_vector(nbits-1 downto 0);
+		PCJump28D 	: out std_logic_vector(nbits-5 downto 0);
 		
 		-- Reset
 		reset		: in std_logic
@@ -315,7 +316,6 @@ signal ReadDataM_W	: std_logic_vector(31 downto 0);
 
 begin
 	
-
 fetch_0: Fetch port map(Jump_F, Instruction, F_InstructionF, PCBranchD_F, PCJump28D_F, PCSrcD_F, F_FPCPlus4, F_PCFF, clk, reset);
 
 decode_0: Decode port map(clk, InstructionF_D, PCPlus4F_D, RegWriteW_D, WriteRegW_D, ResultW_D, D_RD1D, D_RD2D, D_RtD, D_RdD, D_SignImmD, D_RegWriteD, D_MemtoRegD, D_MemWriteD, D_ALUControlD, D_ALUSrcD, D_RegDstD, D_JumpD, D_JalD, D_PCSrcD, D_PCBranchD, D_PCJump28D, reset);

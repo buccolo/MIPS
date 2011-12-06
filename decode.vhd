@@ -142,7 +142,7 @@ begin
 
 	PCBranchD	<= (SignImm(29 downto 0) & "00") + PCPlus4F;
 	
-	PCJump28D	<= InstrD(25 downto 0) && "00";
+	PCJump28D	<= InstrD(25 downto 0) & "00";
 
 	-- RegFile
 	RtD <= InstrD(20 downto 16);
