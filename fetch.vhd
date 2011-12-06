@@ -13,11 +13,11 @@ entity fetch is
 		Jump		: in std_logic;
 		
 		-- Decode
-		DPCBranch	: in std_logic_vector(nbits-1 downto 0);	-- Endereço da instrução para pular caso haja BRANCH
-		DPCJump28	: in std_logic_vector(nbits-5 downto 0); 	-- 28bits do endereço para pular caso haja JUMP
-		DPCSrc		: in std_logic;								-- Indica se deve ocorrer o BRANCH
-		FPCPlus4D	: out std_logic_vector(nbits-1 downto 0);	-- PC+4 que é passado para o Decode
-		PCFD		: out std_logic_vector(nbits-1 downto 0);	-- saída na especificação do MIPS (endereço da instrução atual)
+		PCBranchD	: in std_logic_vector(nbits-1 downto 0);	-- Endereço da instrução para pular caso haja BRANCH
+		PCJump28D	: in std_logic_vector(nbits-5 downto 0); 	-- 28bits do endereço para pular caso haja JUMP
+		PCSrcD		: in std_logic;								-- Indica se deve ocorrer o BRANCH
+		FPCPlus4	: out std_logic_vector(nbits-1 downto 0);	-- PC+4 que é passado para o Decode
+		PCFF		: out std_logic_vector(nbits-1 downto 0);	-- saída na especificação do MIPS (endereço da instrução atual)
 		
 		-- Aux
 		clk			: in std_logic;
@@ -55,19 +55,16 @@ architecture fetch_arc of fetch is
 begin
 	
 	-- calculando PC + 4 (na variavel auxiliar e já passando para a saída)
-    -- TODO: Alhao: Isso aqui ta errado, PCF eh saida!!
-    -- TODO: Alhao: e na linha debaixo tem que usar variable, com signal nao da certo issoae.
-	-- ALHO: acho que da certo sim =) (e corrigi a parada do PCF ser saída, valeu)
 	PCPlus4 <= PCF + 4;
-	FPCPlus4D <= PCPlus4;
+	FPCPlus4 <= PCPlus4;
 	
-	PCFD <= PCF;
+	PCFF <= PCF;
 	
 	-- mux para decidir se o branch deve ser tomado
-	pcnorm	: mux2 port map (PCPlus4, DPCBranch, DPCSrc, PCNormal);
+	pcnorm	: mux2 port map (PCPlus4, PCBranchD, PCSrcD, PCNormal);
 	
 	-- Calcula o endereço para o PC caso haja um Jump
-	PCJump <= PCPlus4(nbits-1 downto nbits-5) & DPCJump28;
+	PCJump <= PCPlus4(nbits-1 downto nbits-5) & PCJump28D;
 	
 	-- Mux para decidir se é um Jump (a saída é o PC', que é o próximo endereço)
 	pc		: mux2 port map (PCNormal, PCJump, Jump, PCLinha);
@@ -76,7 +73,7 @@ begin
 	process(clk) begin
 	
 		if(reset = '1') then
-			PCLinha <= "0H"; 									-- TODO: não sei como passar esse valor!!!!
+			PCLinha <= CONV_STD_LOGIC_VECTOR(0, nbits); 			-- TODO: pode estar errado..
 		end if;
 	
 		-- Rising Edge of the clock
