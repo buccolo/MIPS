@@ -40,7 +40,7 @@ entity decode is
 		MemWriteD	: out std_logic;
 		ALUControlD	: out std_logic_vector (3 downto 0);
 		ALUSrcD		: out std_logic;
-		RegDstD		: out std_logic_vector(1 downto 0);;
+		RegDstD		: out std_logic_vector(1 downto 0);
 		JumpD		: out std_logic;
 		JalD		: out std_logic;
 
