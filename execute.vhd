@@ -16,7 +16,7 @@ entity execute is
 		MemWriteD	: in std_logic;
 		ALUControlD	: in std_logic_vector(2 downto 0);
 		ALUSrcD		: in std_logic;
-		RegDstD		: in std_logic;
+		RegDstD		: in std_logic_vector(1 downto 0);;
 
 		-- Control Unit: Saidas
 		RegWriteE	: out std_logic;

@@ -33,6 +33,7 @@ end ALU;
 -- |	0110 	|			A - B			|
 -- |	0111 	|			SLT				|
 -- |	1000 	|		A XOR	B			|
+-- |	1001 	|		A SLTU B		|
 -- +------------------------+
 
 architecture arc_alu of ALU is begin
