@@ -16,7 +16,7 @@ entity execute is
 		MemWriteD	: in std_logic;
 		ALUControlD	: in std_logic_vector(3 downto 0);
 		ALUSrcD		: in std_logic;
-		RegDstD		: in std_logic_vector(1 downto 0);;
+		RegDstD		: in std_logic_vector(1 downto 0);
 
 		-- Control Unit: Saidas
 		RegWriteE	: out std_logic;
@@ -80,6 +80,6 @@ begin
 
 	-- RegFile
 	WriteDataE	<= RD2D;
-	WriteRegE 	<= RtD when RegDstD = '0' else RdD; -- outro mux
+	WriteRegE 	<= RtD when RegDstD = "00" else RdD; -- outro mux
 
 end;

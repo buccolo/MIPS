@@ -91,7 +91,7 @@ architecture decode_arc of decode is
 			MemWrite	: out std_logic;
 			ALUControl	: out std_logic_vector(3 downto 0);
 			ALUSrc		: out std_logic;
-			RegDst		: out std_logic_vector(1 downto 0);;
+			RegDst		: out std_logic_vector(1 downto 0);
 			Branch		: out std_logic;
 			Jump		: out std_logic;
 			Jal			: out std_logic
