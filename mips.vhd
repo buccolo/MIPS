@@ -44,6 +44,10 @@ component fetch is
 	
 		-- Control Unit
 		Jump		: in std_logic;
+
+		-- Instruction
+		Instruction  : in std_logic_vector(nbits-1 downto 0);
+		InstructionF : out std_logic_vector(nbits-1 downto 0);
 		
 		-- Decode
 		PCBranchD	: in std_logic_vector(nbits-1 downto 0);	-- Endereço da instrução para pular caso haja BRANCH
@@ -225,59 +229,61 @@ end component;
 
 --- FETCH ---
 -- Entradas do Fetch
-signal Jump_F		: std_logic;
-signal PCBranchD_F	: std_logic_vector(nbits-1 downto 0);
-signal PCJump28D_F	: std_logic_vector(nbits-1 downto 0);
-signal PCSrcD_F		: std_logic;
+signal F_InstructionF	: std_logic_vector(nbits-1 downto 0);
+signal Jump_F			: std_logic;
+signal PCBranchD_F		: std_logic_vector(nbits-1 downto 0);
+signal PCJump28D_F		: std_logic_vector(nbits-1 downto 0);
+signal PCSrcD_F			: std_logic;
 -- Saidas do Fetch
-signal F_FPCPlus4	: std_logic_vector(nbits-1 downto 0);
-signal F_PCFF		: std_logic_vector(nbits-1 downto 0);
+signal F_FPCPlus4		: std_logic_vector(nbits-1 downto 0);
+signal F_PCFF			: std_logic_vector(nbits-1 downto 0);
 
 --- DECODE ---
 -- Entradas do Decode
-signal PCPlus4F_D	: std_logic_vector(nbits-1 downto 0);
-signal RegWriteW_D	: std_logic;
-signal WriteRegW_D	: std_logic_vector(4 downto 0);
+signal InstructionF_D 	: std_logic_vector(nbits-1 downto 0);
+signal PCPlus4F_D		: std_logic_vector(nbits-1 downto 0);
+signal RegWriteW_D		: std_logic;
+signal WriteRegW_D		: std_logic_vector(4 downto 0);
 signal ResultW_D		: std_logic_vector(nbits-1 downto 0);
 -- Saídas do Decode
-signal D_RD1D		: std_logic_vector(nbits-1 downto 0);
-signal D_RD2D		: std_logic_vector(nbits-1 downto 0);
-signal D_RtD		: std_logic_vector(4 downto 0);
-signal D_RdD		: std_logic_vector(4 downto 0);
-signal D_SignImmD	: std_logic_vector(nbits-1 downto 0);
-signal D_RegWriteD	: std_logic;
-signal D_MemtoRegD	: std_logic;
-signal D_MemWriteD	: std_logic;
-signal D_ALUControlD: std_logic_vector (3 downto 0);
-signal D_ALUSrcD	: std_logic;
-signal D_RegDstD	: std_logic_vector(1 downto 0);
-signal D_JumpD		: std_logic;
-signal D_JalD		: std_logic;
-signal D_PCSrcD		: std_logic;
-signal D_PCBranchD	: std_logic_vector(nbits-1 downto 0);
+signal D_RD1D			: std_logic_vector(nbits-1 downto 0);
+signal D_RD2D			: std_logic_vector(nbits-1 downto 0);
+signal D_RtD			: std_logic_vector(4 downto 0);
+signal D_RdD			: std_logic_vector(4 downto 0);
+signal D_SignImmD		: std_logic_vector(nbits-1 downto 0);
+signal D_RegWriteD		: std_logic;
+signal D_MemtoRegD		: std_logic;
+signal D_MemWriteD		: std_logic;
+signal D_ALUControlD	: std_logic_vector (3 downto 0);
+signal D_ALUSrcD		: std_logic;
+signal D_RegDstD		: std_logic_vector(1 downto 0);
+signal D_JumpD			: std_logic;
+signal D_JalD			: std_logic;
+signal D_PCSrcD			: std_logic;
+signal D_PCBranchD		: std_logic_vector(nbits-1 downto 0);
 
 --- EXECUTE ----
 -- Entradas do Execute
-signal RegWriteD_E			: std_logic;
-signal MemtoRegD_E			: std_logic;
-signal MemWriteD_E			: std_logic;
-signal ALUControlD_E		: std_logic_vector(3 downto 0);
-signal ALUSrcD_E			: std_logic;
-signal RegDstD_E			: std_logic_vector(1 downto 0);
-signal RD1D_E				: std_logic_vector(31 downto 0);
-signal RD2D_E				: std_logic_vector(31 downto 0);
-signal RtD_E				: std_logic_vector(4 downto 0);
-signal RdD_E				: std_logic_vector(4 downto 0);
-signal SignImmD_E			: std_logic_vector(nbits-1 downto 0);
+signal RegWriteD_E		: std_logic;
+signal MemtoRegD_E		: std_logic;
+signal MemWriteD_E		: std_logic;
+signal ALUControlD_E	: std_logic_vector(3 downto 0);
+signal ALUSrcD_E		: std_logic;
+signal RegDstD_E		: std_logic_vector(1 downto 0);
+signal RD1D_E			: std_logic_vector(31 downto 0);
+signal RD2D_E			: std_logic_vector(31 downto 0);
+signal RtD_E			: std_logic_vector(4 downto 0);
+signal RdD_E			: std_logic_vector(4 downto 0);
+signal SignImmD_E		: std_logic_vector(nbits-1 downto 0);
 
 -- Saídas do Execute
-signal E_RegWriteE			: std_logic;
-signal E_MemtoRegE			: std_logic;
-signal E_MemWriteE			: std_logic;
-signal E_ZeroE				: std_logic;
-signal E_AluOutE			: std_logic_vector(31 downto 0);
-signal E_WriteDataE			: std_logic_vector(31 downto 0);
-signal E_WriteRegE			: std_logic_vector(4 downto 0);
+signal E_RegWriteE		: std_logic;
+signal E_MemtoRegE		: std_logic;
+signal E_MemWriteE		: std_logic;
+signal E_ZeroE			: std_logic;
+signal E_AluOutE		: std_logic_vector(31 downto 0);
+signal E_WriteDataE		: std_logic_vector(31 downto 0);
+signal E_WriteRegE		: std_logic_vector(4 downto 0);
 
 --- MEMORY ---
 signal RegWriteE_M	: std_logic;
@@ -309,9 +315,9 @@ signal ReadDataM_W	: std_logic_vector(31 downto 0);
 begin
 	
 
-fetch_0: Fetch port map(Jump_F, PCBranchD_F, PCJump28D_F, PCSrcD_F, F_FPCPlus4, F_PCFF, clk, reset);
+fetch_0: Fetch port map(Jump_F, Instruction, F_InstructionF, PCBranchD_F, PCJump28D_F, PCSrcD_F, F_FPCPlus4, F_PCFF, clk, reset);
 
-decode_0: Decode port map(clk, Instruction, PCPlus4F_D, RegWriteW_D, WriteRegW_D, ResultW_D, D_RD1D, D_RD2D, D_RtD, D_RdD, D_SignImmD, D_RegWriteD, D_MemtoRegD, D_MemWriteD, D_ALUControlD, D_ALUSrcD, D_RegDstD, D_JumpD, D_JalD, D_PCSrcD, D_PCBranchD, reset);
+decode_0: Decode port map(clk, InstructionF_D, PCPlus4F_D, RegWriteW_D, WriteRegW_D, ResultW_D, D_RD1D, D_RD2D, D_RtD, D_RdD, D_SignImmD, D_RegWriteD, D_MemtoRegD, D_MemWriteD, D_ALUControlD, D_ALUSrcD, D_RegDstD, D_JumpD, D_JalD, D_PCSrcD, D_PCBranchD, reset);
 
 execute_0: Execute port map(clk, RegWriteD_E, MemtoRegD_E, MemWriteD_E, ALUControlD_E, ALUSrcD_E, RegDstD_E, E_RegWriteE, E_MemtoRegE, E_MemWriteE, E_ZeroE, E_AluOutE, RD1D_E, RD2D_E, RtD_E, RdD_E, E_WriteDataE, SignImmD_E, E_WriteRegE, reset);
 
@@ -324,7 +330,29 @@ process(clk)
 begin 
 	if clk'EVENT and clk = '1' then
 	
-		-- Troca troca
+		-- TO FETCH
+		PCBranchD_F <= D_PCBranchD;
+		PCJump28D_F <= D_JumpD; -- QUEM PASSA ESSA XANA PRA K!!!?!?!?!?! 
+		PCSrcD_F 	<= D_PCSrcD;
+		Jump_F 		<= D_JumpD;
+
+		-- TO DECODE
+		InstructionF_D	<= F_InstructionF;
+		PCPlus4F_D		<= F_FPCPlus4;
+		RegWriteW_D		<= W_RegWriteW;
+		WriteRegW_D		<= W_WriteRegW;
+		ResultW_D		<= W_ResultW;
+		
+		-- TO EXECUTE
+		RegWriteD_E		<= D_RegWriteD;
+		MemtoRegD_E		<= D_MemtoRegD;
+		MemWriteD_E		<= D_MemWriteD;
+		ALUControlD_E	<= D_ALUControlD;
+		ALUSrcD_E		<= D_ALUSrcD;
+		RegDstD_E		<= D_RegDstD;
+		
+		-- TO MEMORY
+		-- TO WRITEBACK
 		
 	
 	end if;
