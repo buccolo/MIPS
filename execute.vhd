@@ -17,15 +17,11 @@ entity execute is
 		ALUControlD	: in std_logic_vector(2 downto 0);
 		ALUSrcD		: in std_logic;
 		RegDstD		: in std_logic;
-		BranchD		: in std_logic;
-		JumpD		: in std_logic;
-		JalD		: in std_logic;
 
 		-- Control Unit: Saidas
 		RegWriteE	: out std_logic;
 		MemtoRegE	: out std_logic;
 		MemWriteE	: out std_logic;
-		BranchE		: out std_logic;
 
 		-- ALU
 		ZeroE		: out std_logic;
@@ -35,15 +31,13 @@ entity execute is
 		RD1D		: in std_logic_vector(31 downto 0);
 		RD2D		: in std_logic_vector(31 downto 0);
 
-		-- PC
-		PCBranchE	: out std_logic_vector(31 downto 0);
-		SignImmD	: in std_logic_vector(31 downto 0);
-		PCPlus4D	: in std_logic_vector(31 downto 0);
-
 		-- RegFile
 		RtD			: in std_logic_vector(4 downto 0);
 		RdD			: in std_logic_vector(4 downto 0);
 		WriteDataE	: out std_logic_vector(31 downto 0);
+
+		-- Sign Extend
+		SignImmD	: in std_logic_vector(nbits-1 downto 0);
 		WriteRegE	: out std_logic_vector(4 downto 0)
 		
 	);
@@ -87,8 +81,5 @@ begin
 	-- RegFile
 	WriteDataE	<= RD2D;
 	WriteRegE 	<= RtD when RegDstD = '0' else RdD; -- outro mux
-	
-	-- Shift Left Like a Boss: DDCA.pdf, pag 423
-	PCBranchE <= (SignImmD(29 downto 0) & "00") + PCPlus4D;
 
 end;

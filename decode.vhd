@@ -17,7 +17,6 @@ entity decode is
 
 		-- Repassando o PCPlus4
 		PCPlus4F	: in std_logic_vector(nbits-1 downto 0);
-		PCPlus4D	: out std_logic_vector(nbits-1 downto 0);
 
 		-- RegFile: sinal de enable, vem do Writeback		
 		RegWriteW	: in std_logic;
@@ -42,9 +41,12 @@ entity decode is
 		ALUControlD	: out std_logic_vector (2 downto 0);
 		ALUSrcD		: out std_logic;
 		RegDstD		: out std_logic;
-		BranchD		: out std_logic;
 		JumpD		: out std_logic;
-		JalD		: out std_logic
+		JalD		: out std_logic;
+
+		-- PC
+		PCSrcD		: out std_logic;
+		PCBranchD	: out std_logic
 
 	);
 end decode;	
@@ -52,11 +54,13 @@ end decode;
 architecture decode_arc of decode is
 
 	-- Sinais necessarios para ligar o RegisterFile!
-	signal A1	: std_logic_vector(4 downto 0);
-	signal A2	: std_logic_vector(4 downto 0);
-	signal A3	: std_logic_vector(4 downto 0);
-	signal WD3	: std_logic_vector(nbits-1 downto 0); 
-	signal We3	: std_logic;
+	signal A1		: std_logic_vector(4 downto 0);
+	signal A2		: std_logic_vector(4 downto 0);
+	signal A3		: std_logic_vector(4 downto 0);
+	signal WD3		: std_logic_vector(nbits-1 downto 0); 
+	signal We3		: std_logic;
+
+	signal SignImm	: std_logic_vector(nbits-1 downto 0);
 
 	component RF is
 		generic(
@@ -94,6 +98,11 @@ architecture decode_arc of decode is
 		);
 	end component;
 
+	signal BranchD	: std_logic;
+	signal EqualD	: std_logic;
+	signal RD1		: std_logic_vector(nbits-1 downto 0);
+	signal RD2		: std_logic_vector(nbits-1 downto 0);
+
 begin
 	
 	------------------	
@@ -102,11 +111,11 @@ begin
 	Op 		<= InstrD(31 downto 26);
 	Funct	<= InstrD(5 downto 0);
 
-	-- TODO: Mapear as saidas aqui em cima eh suficiente? Mesmo para RegFile...	
+
 	cu_0: CU port map(Op,Funct,RegWriteD,MemtoRegD,MemWriteD,ALUControlD,ALUSrcD,RegDstD,BranchD,JumpD,JalD);
-	
 
 	-- TODO: precisa por um process(clk envolta disso tudo?) dizendo isso por conta do clk do regfile...
+
 	-------------------
 	-- Register File --
 	-------------------
@@ -116,16 +125,23 @@ begin
 	WD3	<= ResultW;
 	We3	<= RegWriteW;
 
-	rf_0: RF port map (A1,A2,A3,WD3,clk,We3,RD1D,RD2D);
+	rf_0: RF port map (A1,A2,A3,WD3,clk,We3,RD1,RD2);
 
-	-- TODO: Verificar isso aqui, achei no DDCA.pdf pag 423. La o X eh para falar que ta em hexa!
-	SignImmD <= "0000000000000000" & InstrD(15 downto 0) when InstrD(15) = '0' else "1111111111111111" & InstrD(15 downto 0);
+	EqualD <= '1' when RD1 = RD2 else '0';
+	PCSrcD <= BranchD and EqualD; 
+
+	RD1D <= RD1;
+	RD2D <= RD2;
+
+	SignImm		<= "0000000000000000" & InstrD(15 downto 0) when InstrD(15) = '0' else "1111111111111111" & InstrD(15 downto 0);
+	SignImmD	<= SignImm;
+
+	PCBranchD <= (SignImm(29 downto 0) & "00") + PCPlus4F;
 
 	-- RegFile
 	RtD <= InstrD(20 downto 16);
 	RdD <= InstrD(15 downto 11);
 
-	-- Repassa o PCPlus4 
-	PCPlus4D <= PCPlus4F;
+	
 
 end;

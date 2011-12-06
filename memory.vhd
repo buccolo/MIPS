@@ -15,7 +15,6 @@ entity memory is
 		RegWriteE	: in std_logic;
 		MemtoRegE	: in std_logic;
 		MemWriteE	: in std_logic;
-		BranchE		: in std_logic;
 		RegWriteM	: out std_logic;
 		MemtoRegM	: out std_logic;
 
@@ -28,11 +27,6 @@ entity memory is
 		WriteDataE	: in std_logic_vector(31 downto 0);
 		WriteRegE	: in std_logic_vector(4 downto 0);
 		WriteRegM	: out std_logic_vector(4 downto 0);
-
-		-- PC
-		PCBranchE	: in std_logic_vector(31 downto 0);
-		PCBranchM	: out std_logic_vector(31 downto 0);
-		PCSrcM		: out std_logic;
 
 		-- Memory
 		ReadDataM	: out std_logic_vector(31 downto 0);
@@ -47,13 +41,9 @@ architecture memory_arc of memory is
 
 begin
 
-	-- PC
-	PCSrcM 		<= BranchE and ZeroE;
-
 	-- Sinais que passam direto
 	AluOutM 	<= AluOutE;
 	WriteRegM	<= WriteRegE;
-	PCBranchM	<= PCBranchE;
 	RegWriteM	<= RegWriteE;
 	MemtoRegM	<= MemtoRegE;
 

@@ -36,6 +36,180 @@ end mips;
   
 architecture arc_mips of mips is
 
+component fetch is
+	generic(
+		nbits	: positive	:= 32
+	);
+	port(
+		-- Control Unit
+		Jump		: in std_logic;
+		
+		-- Decode
+		PCBranchD	: in std_logic_vector(nbits-1 downto 0);	-- Endereço da instrução para pular caso haja BRANCH
+		PCJump28D	: in std_logic_vector(nbits-5 downto 0); 	-- 28bits do endereço para pular caso haja JUMP
+		PCSrcD		: in std_logic;								-- Indica se deve ocorrer o BRANCH
+		FPCPlus4	: out std_logic_vector(nbits-1 downto 0);	-- PC+4 que é passado para o Decode
+		PCFF		: out std_logic_vector(nbits-1 downto 0);	-- saída na especificação do MIPS (endereço da instrução atual)
+		
+		-- Aux
+		clk			: in std_logic;
+		reset		: in std_logic		
+	);
+end component;
+
+component decode is
+	generic(
+		nbits	: positive	:= 32
+	);
+	port(
+		clk			: in std_logic;
+
+		-- Preciosa instrucao
+		InstrD		: in std_logic_vector(nbits-1 downto 0);
+
+		-- Repassando o PCPlus4
+		PCPlus4F	: in std_logic_vector(nbits-1 downto 0);
+		PCPlus4D	: out std_logic_vector(nbits-1 downto 0);
+
+		-- RegFile: sinal de enable, vem do Writeback		
+		RegWriteW	: in std_logic;
+		WriteRegW	: in std_logic_vector(4 downto 0); 
+
+		-- RegFile: sinal de WD3
+		ResultW		: in std_logic_vector(nbits-1 downto 0);
+
+		-- RegFile: saidas
+		RD1D		: out std_logic_vector(nbits-1 downto 0);
+		RD2D		: out std_logic_vector(nbits-1 downto 0);
+		RtD			: out std_logic_vector(4 downto 0);
+		RdD			: out std_logic_vector(4 downto 0);
+
+		-- SignExtender
+		SignImmD	: out std_logic_vector(nbits-1 downto 0);
+
+		-- ControlUnit: Saidas
+		RegWriteD	: out std_logic;
+		MemtoRegD	: out std_logic;
+		MemWriteD	: out std_logic;
+		ALUControlD	: out std_logic_vector (2 downto 0);
+		ALUSrcD		: out std_logic;
+		RegDstD		: out std_logic;
+		BranchD		: out std_logic;
+		JumpD		: out std_logic;
+		JalD		: out std_logic
+
+	);
+end component;
+
+component execute is
+	generic(
+		nbits	: positive	:= 32
+	);
+	port(
+		clk		: in std_logic;
+
+		-- Control Unit: Entradas
+		RegWriteD	: in std_logic;
+		MemtoRegD	: in std_logic;
+		MemWriteD	: in std_logic;
+		ALUControlD	: in std_logic_vector(2 downto 0);
+		ALUSrcD		: in std_logic;
+		RegDstD		: in std_logic;
+		BranchD		: in std_logic;
+		JumpD		: in std_logic;
+		JalD		: in std_logic;
+
+		-- Control Unit: Saidas
+		RegWriteE	: out std_logic;
+		MemtoRegE	: out std_logic;
+		MemWriteE	: out std_logic;
+		BranchE		: out std_logic;
+
+		-- ALU
+		ZeroE		: out std_logic;
+		AluOutE		: out std_logic_vector(31 downto 0);
+
+		-- RegisterFile
+		RD1D		: in std_logic_vector(31 downto 0);
+		RD2D		: in std_logic_vector(31 downto 0);
+
+		-- PC
+		PCBranchE	: out std_logic_vector(31 downto 0);
+		SignImmD	: in std_logic_vector(31 downto 0);
+		PCPlus4D	: in std_logic_vector(31 downto 0);
+
+		-- RegFile
+		RtD			: in std_logic_vector(4 downto 0);
+		RdD			: in std_logic_vector(4 downto 0);
+		WriteDataE	: out std_logic_vector(31 downto 0);
+		WriteRegE	: out std_logic_vector(4 downto 0)
+		
+	);
+end component;
+
+component memory is
+	generic(
+		nbits	: positive	:= 32
+	);
+	port(
+		clk			: in std_logic;
+
+		-- Control Unit
+		RegWriteE	: in std_logic;
+		MemtoRegE	: in std_logic;
+		MemWriteE	: in std_logic;
+		BranchE		: in std_logic;
+		RegWriteM	: out std_logic;
+		MemtoRegM	: out std_logic;
+
+		-- ALU
+		ZeroE		: in std_logic;
+		AluOutE		: in std_logic_vector(31 downto 0);
+		AluOutM		: out std_logic_vector(31 downto 0);
+
+		-- RegFile 
+		WriteDataE	: in std_logic_vector(31 downto 0);
+		WriteRegE	: in std_logic_vector(4 downto 0);
+		WriteRegM	: out std_logic_vector(4 downto 0);
+
+		-- PC
+		PCBranchE	: in std_logic_vector(31 downto 0);
+		PCBranchM	: out std_logic_vector(31 downto 0);
+		PCSrcM		: out std_logic;
+
+		-- Memory
+		ReadDataM	: out std_logic_vector(31 downto 0);
+
+		-- Migué de receber a memory direto da entrada do MIPS
+		Data		: in std_logic_vector(31 downto 0)
+		
+	);
+end component;
+
+component writeback is
+	generic(
+		nbits	: positive	:= 32
+	);
+	port(
+		clk			: in std_logic;
+
+		-- Control Unit
+		RegWriteM	: in std_logic;
+		MemtoRegM	: in std_logic;
+		RegWriteW	: out std_logic;
+
+		-- ALU
+		AluOutM		: in std_logic_vector(31 downto 0);
+		ResultW		: out std_logic_vector(31 downto 0);
+
+		-- RegFile
+		WriteRegM	: in std_logic_vector(4 downto 0);
+		WriteRegW	: out std_logic_vector(4 downto 0);
+
+		-- Memory
+		ReadDataM	: in std_logic_vector(31 downto 0)
+	);
+end component;
 	
 begin
 
