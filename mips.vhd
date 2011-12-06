@@ -138,7 +138,7 @@ component execute is
 		MemWriteD	: in std_logic;
 		ALUControlD	: in std_logic_vector(3 downto 0);
 		ALUSrcD		: in std_logic;
-		RegDstD		: in std_logic_vector(1 downto 0);;
+		RegDstD		: in std_logic_vector(1 downto 0);
 
 		-- Control Unit: Saidas
 		RegWriteE	: out std_logic;
@@ -224,7 +224,8 @@ component writeback is
 		ReadDataM	: in std_logic_vector(31 downto 0)
 	);
 end component;
-
+	-- signals de auxilio
 begin
+	
 
 end;
