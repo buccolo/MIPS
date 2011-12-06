@@ -30,18 +30,61 @@ signal erro : boolean := false;
 
 -- Sinais do MIPS -- 
 signal Instruction 	: std_logic_vector(31 downto 0);
-signal Data					: std_logic_vector(31 downto 0);
-signal clk 					: std_logic := '1';
-signal reset				: std_logic;
-signal PCF					: std_logic_vector(31 downto 0);
-signal ALUOutM			: std_logic_vector(31 downto 0);
-signal WriteDataM		: std_logic_vector(31 downto 0);
-signal MemWriteM		: std_logic;
+signal Data			: std_logic_vector(31 downto 0);
+signal clk 			: std_logic := '1';
+signal reset		: std_logic;
+signal PCF			: std_logic_vector(31 downto 0);
+signal ALUOutM		: std_logic_vector(31 downto 0);
+signal WriteDataM	: std_logic_vector(31 downto 0);
+signal MemWriteM	: std_logic;
 
 begin
 	mips_0: mips port map (Instruction, Data, clk, reset, PCF, AluOutM, WriteDataM, MemWriteM);
 
 	clk <= not clk after 50 ns;
+
+	process
+		reset <= '1';
+		wait for 50 ns;
+
+		-- RTYPE  RD, RS, RT --------------------+
+		-- --------------------------------------|
+		-- OP     RS    RT    RD    SHIFT FUNCT  |
+		-- 000000 00000 00000 00000 00000 000000 |
+        -----------------------------------------+
+
+		-- LW RT, IMEDIATE(RS) -------------------+
+		-- ---------------------------------------|
+		-- OP     RS    RT    IMEDIATE            |
+		-- 100011 00000 01010 0000 0000 0010 0000 |
+        ------------------------------------------+
+
+		-- SW RT, IMEDIATE(RS) -------------------+
+		-- ---------------------------------------|
+		-- OP     RS    RT    IMEDIATE            |
+		-- 101011 00000 01010 0000 0000 0010 0000 |
+        ------------------------------------------+
+
+		-- BEQ RS, RT, IMEDIATE ------------------+
+		-- ---------------------------------------|
+		-- OP     RS    RT    IMEDIATE            |
+		-- 000100 00000 01010 0000 0000 0010 0000 |
+        ------------------------------------------+
+
+		-- J 26-BIT-IMEDIATE ----------------+
+		-- ----------------------------------|
+		-- OP     26 BIT IMEDIATE            |
+		-- 000010 00000000000000000000000000 |
+        -------------------------------------+
+
+		-- JAL 26-BIT-IMEDIATE --------------+
+		-- ----------------------------------|
+		-- OP     26 BIT IMEDIATE            |
+		-- 000011 00000000000000000000000000 |
+        -------------------------------------+
+
+	end process;
+	
 
 	process 
 		begin
