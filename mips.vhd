@@ -261,6 +261,7 @@ signal D_JumpD			: std_logic;
 signal D_JalD			: std_logic;
 signal D_PCSrcD			: std_logic;
 signal D_PCBranchD		: std_logic_vector(nbits-1 downto 0);
+signal D_PCJump28D		: std_logic_vector(nbits-5 downto 0);
 
 --- EXECUTE ----
 -- Entradas do Execute
@@ -317,11 +318,11 @@ begin
 
 fetch_0: Fetch port map(Jump_F, Instruction, F_InstructionF, PCBranchD_F, PCJump28D_F, PCSrcD_F, F_FPCPlus4, F_PCFF, clk, reset);
 
-decode_0: Decode port map(clk, InstructionF_D, PCPlus4F_D, RegWriteW_D, WriteRegW_D, ResultW_D, D_RD1D, D_RD2D, D_RtD, D_RdD, D_SignImmD, D_RegWriteD, D_MemtoRegD, D_MemWriteD, D_ALUControlD, D_ALUSrcD, D_RegDstD, D_JumpD, D_JalD, D_PCSrcD, D_PCBranchD, reset);
+decode_0: Decode port map(clk, InstructionF_D, PCPlus4F_D, RegWriteW_D, WriteRegW_D, ResultW_D, D_RD1D, D_RD2D, D_RtD, D_RdD, D_SignImmD, D_RegWriteD, D_MemtoRegD, D_MemWriteD, D_ALUControlD, D_ALUSrcD, D_RegDstD, D_JumpD, D_JalD, D_PCSrcD, D_PCBranchD, D_PCJump28D, reset);
 
 execute_0: Execute port map(clk, RegWriteD_E, MemtoRegD_E, MemWriteD_E, ALUControlD_E, ALUSrcD_E, RegDstD_E, E_RegWriteE, E_MemtoRegE, E_MemWriteE, E_ZeroE, E_AluOutE, RD1D_E, RD2D_E, RtD_E, RdD_E, E_WriteDataE, SignImmD_E, E_WriteRegE, reset);
 
-memory_0: Memory port map(clk, RegWriteE_M, MemtoRegE_M, MemWriteE_M, M_RegWriteM, M_MemtoRegM, ZeroE_M, AluOutE_M, M_AluOutM, WriteDataE_M, WriteRegE_M, M_WriteRegM, M_ReadDataM, Data_M, reset);
+memory_0: Memory port map(clk, RegWriteE_M, MemtoRegE_M, MemWriteE_M, M_RegWriteM, M_MemtoRegM, ZeroE_M, AluOutE_M, M_AluOutM, WriteDataE_M, WriteRegE_M, M_WriteRegM, M_ReadDataM, Data, reset);
 
 writeback_0: Writeback port map(clk, RegWriteM_W, MemtoRegM_W, W_RegWriteW, AluOutM_W, W_ResultW, WriteRegM_W, W_WriteRegW, ReadDataM_W, reset);
 
@@ -332,7 +333,7 @@ begin
 	
 		-- TO FETCH
 		PCBranchD_F <= D_PCBranchD;
-		PCJump28D_F <= D_JumpD; -- QUEM PASSA ESSA XANA PRA K!!!?!?!?!?! 
+		PCJump28D_F <= D_PCJump28D;
 		PCSrcD_F 	<= D_PCSrcD;
 		Jump_F 		<= D_JumpD;
 
@@ -350,20 +351,29 @@ begin
 		ALUControlD_E	<= D_ALUControlD;
 		ALUSrcD_E		<= D_ALUSrcD;
 		RegDstD_E		<= D_RegDstD;
+		RD1D_E			<= D_RD1D;
+		RD2D_E			<= D_RD2D;
+		RtD_E			<= D_RtD;
+		RdD_E			<= D_RdD;
+		SignImmD_E		<= D_SignImmD;
 		
 		-- TO MEMORY
+		RegWriteE_M		<= E_RegWriteE; 
+		MemtoRegE_M		<= E_MemtoRegE;
+		MemWriteE_M		<= E_MemWriteE;
+		ZeroE_M			<= E_ZeroE;
+		AluOutE_M		<= E_AluOutE;
+		WriteDataE_M	<= E_WriteDataE;
+		WriteRegE_M		<= E_WriteRegE;
+
 		-- TO WRITEBACK
-		
-	
+		RegWriteM_W 	<= M_RegWriteM;
+		MemtoRegM_W		<= M_MemtoRegM;
+		AluOutM_W 		<= M_AluOutM;
+		WriteRegM_W		<= M_WriteRegM;
+		ReadDataM_W		<= M_ReadDataM;
+
 	end if;
 end process;
-
-
-
-
-
-
-
-
 
 end;
