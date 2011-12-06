@@ -14,7 +14,7 @@ entity execute is
 		RegWriteD	: in std_logic;
 		MemtoRegD	: in std_logic;
 		MemWriteD	: in std_logic;
-		ALUControlD	: in std_logic_vector(2 downto 0);
+		ALUControlD	: in std_logic_vector(3 downto 0);
 		ALUSrcD		: in std_logic;
 		RegDstD		: in std_logic_vector(1 downto 0);;
 
@@ -59,7 +59,7 @@ architecture execute_arc of execute is
 		port(
 			SrcA		: in std_logic_vector(W-1 downto 0);
 			SrcB		: in std_logic_vector(W-1 downto 0);
-			AluControl	: in std_logic_vector(2 downto 0);
+			AluControl	: in std_logic_vector(3 downto 0);
 			AluResult	: out std_logic_vector(W-1 downto 0);
 			Zero		: out std_logic;
 			Overflow	: out std_logic;

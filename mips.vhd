@@ -36,11 +36,31 @@ end mips;
   
 architecture arc_mips of mips is
 
+
+component ALU is 
+	generic(
+		W : natural := 32; 
+		Cw	: natural := 3
+	);
+	port(
+		SrcA				: in std_logic_vector(W-1 downto 0);
+		SrcB				: in std_logic_vector(W-1 downto 0);
+		AluControl	: in std_logic_vector(3 downto 0);
+		AluResult		: out std_logic_vector(W-1 downto 0);
+		Zero				: out std_logic;
+		Overflow		: out std_logic;
+		CarryOut		: out std_logic
+	);	
+
+end component;
+
+
 component fetch is
 	generic(
 		nbits	: positive	:= 32
 	);
 	port(
+	
 		-- Control Unit
 		Jump		: in std_logic;
 		
@@ -53,9 +73,11 @@ component fetch is
 		
 		-- Aux
 		clk			: in std_logic;
-		reset		: in std_logic		
+		reset		: in std_logic
+		
 	);
-end component;
+end component;	
+
 
 component decode is
 	generic(
@@ -69,7 +91,6 @@ component decode is
 
 		-- Repassando o PCPlus4
 		PCPlus4F	: in std_logic_vector(nbits-1 downto 0);
-		PCPlus4D	: out std_logic_vector(nbits-1 downto 0);
 
 		-- RegFile: sinal de enable, vem do Writeback		
 		RegWriteW	: in std_logic;
@@ -91,15 +112,18 @@ component decode is
 		RegWriteD	: out std_logic;
 		MemtoRegD	: out std_logic;
 		MemWriteD	: out std_logic;
-		ALUControlD	: out std_logic_vector (2 downto 0);
+		ALUControlD	: out std_logic_vector (3 downto 0);
 		ALUSrcD		: out std_logic;
-		RegDstD		: out std_logic;
-		BranchD		: out std_logic;
+		RegDstD		: out std_logic_vector(1 downto 0);;
 		JumpD		: out std_logic;
-		JalD		: out std_logic
+		JalD		: out std_logic;
+
+		-- PC
+		PCSrcD		: out std_logic;
+		PCBranchD	: out std_logic
 
 	);
-end component;
+end component;	
 
 component execute is
 	generic(
@@ -112,18 +136,14 @@ component execute is
 		RegWriteD	: in std_logic;
 		MemtoRegD	: in std_logic;
 		MemWriteD	: in std_logic;
-		ALUControlD	: in std_logic_vector(2 downto 0);
+		ALUControlD	: in std_logic_vector(3 downto 0);
 		ALUSrcD		: in std_logic;
-		RegDstD		: in std_logic;
-		BranchD		: in std_logic;
-		JumpD		: in std_logic;
-		JalD		: in std_logic;
+		RegDstD		: in std_logic_vector(1 downto 0);;
 
 		-- Control Unit: Saidas
 		RegWriteE	: out std_logic;
 		MemtoRegE	: out std_logic;
 		MemWriteE	: out std_logic;
-		BranchE		: out std_logic;
 
 		-- ALU
 		ZeroE		: out std_logic;
@@ -133,19 +153,18 @@ component execute is
 		RD1D		: in std_logic_vector(31 downto 0);
 		RD2D		: in std_logic_vector(31 downto 0);
 
-		-- PC
-		PCBranchE	: out std_logic_vector(31 downto 0);
-		SignImmD	: in std_logic_vector(31 downto 0);
-		PCPlus4D	: in std_logic_vector(31 downto 0);
-
 		-- RegFile
 		RtD			: in std_logic_vector(4 downto 0);
 		RdD			: in std_logic_vector(4 downto 0);
 		WriteDataE	: out std_logic_vector(31 downto 0);
+
+		-- Sign Extend
+		SignImmD	: in std_logic_vector(nbits-1 downto 0);
 		WriteRegE	: out std_logic_vector(4 downto 0)
 		
 	);
 end component;
+
 
 component memory is
 	generic(
@@ -158,7 +177,6 @@ component memory is
 		RegWriteE	: in std_logic;
 		MemtoRegE	: in std_logic;
 		MemWriteE	: in std_logic;
-		BranchE		: in std_logic;
 		RegWriteM	: out std_logic;
 		MemtoRegM	: out std_logic;
 
@@ -172,11 +190,6 @@ component memory is
 		WriteRegE	: in std_logic_vector(4 downto 0);
 		WriteRegM	: out std_logic_vector(4 downto 0);
 
-		-- PC
-		PCBranchE	: in std_logic_vector(31 downto 0);
-		PCBranchM	: out std_logic_vector(31 downto 0);
-		PCSrcM		: out std_logic;
-
 		-- Memory
 		ReadDataM	: out std_logic_vector(31 downto 0);
 
@@ -185,6 +198,7 @@ component memory is
 		
 	);
 end component;
+
 
 component writeback is
 	generic(
@@ -210,7 +224,7 @@ component writeback is
 		ReadDataM	: in std_logic_vector(31 downto 0)
 	);
 end component;
-	
+
 begin
 
 end;

@@ -38,7 +38,7 @@ entity decode is
 		RegWriteD	: out std_logic;
 		MemtoRegD	: out std_logic;
 		MemWriteD	: out std_logic;
-		ALUControlD	: out std_logic_vector (2 downto 0);
+		ALUControlD	: out std_logic_vector (3 downto 0);
 		ALUSrcD		: out std_logic;
 		RegDstD		: out std_logic_vector(1 downto 0);;
 		JumpD		: out std_logic;
@@ -89,7 +89,7 @@ architecture decode_arc of decode is
 			RegWrite	: out std_logic;
 			MemtoReg	: out std_logic;
 			MemWrite	: out std_logic;
-			ALUControl	: out std_logic_vector(2 downto 0);
+			ALUControl	: out std_logic_vector(3 downto 0);
 			ALUSrc		: out std_logic;
 			RegDst		: out std_logic_vector(1 downto 0);;
 			Branch		: out std_logic;
