@@ -70,14 +70,14 @@ begin
 		-- j
 		when "000010" =>
 		
-		-- TODO: JAL e BEQ tem o mesmo opcode!?
 		-- jal
-		when "000100" =>
+		when "000011" =>
 		
 		-- beq
 		when "000100" =>
 
-		-- TODO: faltou o subi, essa porra existe mesmo??
+		-- TODO: faltou o subi, essa porra existe mesmo?? 
+		-- ALHO: segundo o livro, o MIPS não tem subi porque é a mesma coisa que addi com negativo, nem opcode tem
 		
 		when others => null;
 
