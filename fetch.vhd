@@ -27,68 +27,69 @@ entity fetch is
 		clk			: in std_logic;
 		reset		: in std_logic
 		
-		
-		
 	);
 end fetch;	
 	
 architecture fetch_arc of fetch is
-	-- Auxiliar para guardar o PC+4
-	signal PCPlus4	: std_logic_vector(nbits-1 downto 0);
-	
-	-- Guarda o próximo PC
-	signal PClinha	: std_logic_vector(nbits-1 downto 0);
-	
-	-- Caso o PC seja o próximo (+4) ou através de Branch
-	signal PCNormal	: std_logic_vector(nbits-1 downto 0);
-	
-	-- Caso haja um Jump
-	signal PCJump	: std_logic_vector(nbits-1 downto 0);
-	
-	-- PCF auxiliar
-	signal PCF		: std_logic_vector(nbits-1 downto 0);
-	
-	component mux2
-		port(
-			d0, d1	: in STD_LOGIC_VECTOR(nbits downto 0);
-			s		: in STD_LOGIC;
-			y		: out STD_LOGIC_VECTOR(nbits downto 0)
-		);
-	end component;
-	
+
+component reg is 
+	generic(
+		nbits : positive := 32
+	);
+	port(
+		clk, reset	: in STD_LOGIC;
+		d			: in STD_LOGIC_VECTOR(nbits-1 downto 0);
+		q			: out STD_LOGIC_VECTOR(nbits-1 downto 0)
+	);
+end component;
+
+component mux2 is
+	generic(
+		nbits	: positive := 32
+	);
+	port(
+		d0, d1	: in STD_LOGIC_VECTOR(nbits-1 downto 0);
+		s		: in STD_LOGIC;
+		y		: out STD_LOGIC_VECTOR(nbits-1 downto 0)
+	);
+end component;
+
+
+-- Sinais auxiliares.
+signal PC			: std_logic_vector(nbits-1 downto 0);
+signal PCLinha		: std_logic_vector(nbits-1 downto 0);
+signal PCPlus4		: std_logic_vector(nbits-1 downto 0);
+signal PCAux		: std_logic_vector(nbits-1 downto 0);
+signal PCSrcDAux 	: std_logic := PCSrcD;
+signal JumpAux		: std_logic := Jump;
+signal PCJump32		: std_logic_vector(nbits-1 downto 0);
+
 begin
+
+	PCJump32	<= PCPlus4(31 downto 28) & PCJump28D; -- Completa o endereço alvo do Jump
+
+	pcreg	: reg port map(clk, reset, PCLinha, PC);	-- Registrador que passa do PC' para o PCF na subida do relógio
+	beq		: mux2 port map(PCPlus4, PCBranchD, PCSrcDAux, PCAux);	-- Mux que decide se é branch
+	jumpMux	: mux2 port map(PCAux, PCJump32, JumpAux, PCLinha);		-- Mux que decide se é Jump
 	
-	-- calculando PC + 4 (na variavel auxiliar e já passando para a saída)
-	PCPlus4 <= PCF + 4;
+	PCFF <= PC;
+	
+	InstructionF	<= Instruction;	-- Passa a instrução para frente
+	
+	PCPlus4 <= PC + 4; -- Calcula a próxima instrução caso não seja beq nem jump
 	FPCPlus4 <= PCPlus4;
 	
-	InstructionF <= Instruction;
-	
-	PCFF <= PCF;
-	
-	PCNormal <= PCPlus4 when PCSrcD = '0' else PCBranchD;
-
-	-- Calcula o endereço para o PC caso haja um Jump
-	PCJump <= PCPlus4(31 downto 28) & PCJump28D;
-	
-	-- Mux para decidir se é um Jump (a saída é o PC', que é o próximo endereço)
-	PCLinha <= PCNormal when Jump = '0' else PCJump;
 	
 	
 	process(clk) begin
 	
-		if(reset = '1') then
-			PCLinha <= CONV_STD_LOGIC_VECTOR(0, nbits); 			-- TODO: pode estar errado..
+	if (clk'event and clk = '1') then
+		if reset = '1' then	-- Caso seja reset, coloca 0 no PCSrcD e no Jump (não é branch e nem Jump).
+			PCSrcDAux	<= '0';
+			JumpAux		<= '0';
 		end if;
-	
-		-- Rising Edge of the clock
-		if(clk'event and clk = '1') then
-		
-			-- Atualiza o próximo endereço em PCF com o que estava em PC' (registrador)
-			PCF <= PClinha;
-	
-		end if;	
+	end if;
 	
 	end process;
-
+	
 end;

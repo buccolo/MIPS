@@ -31,7 +31,7 @@ signal erro : boolean := false;
 -- Sinais do MIPS -- 
 signal Instruction 	: std_logic_vector(31 downto 0);
 signal Data			: std_logic_vector(31 downto 0);
-signal clk 			: std_logic := '1';
+signal clk 			: std_logic := '0';
 signal reset		: std_logic;
 signal PCF			: std_logic_vector(31 downto 0);
 signal ALUOutM		: std_logic_vector(31 downto 0);
@@ -82,6 +82,7 @@ begin
 	process begin
 		reset <= '1';
 		wait for 50 ns;
+		reset <= '0';
 
 		-- lw $1, 1($0) >>> $0, $1, imediate
 		Instruction <= "100011"&"00000"&"00001"&"0000000000000001";
@@ -109,14 +110,7 @@ begin
 		-- and $5, $3, $2 >>> $3, $2, $5
 		Instruction <= "000000"&"00011"&"00010"&"00110"&"00000"&"100100";
 		assert PCF = "00000000000000000000000000010100" report "PC NAO FUNCIONA";
-		wait for 50 ns;
-
-	end process;
-	
-
-	process 
-		begin
-		wait for 600 ns;      -- Define o tempo de simulacao
+		wait for 350 ns;
 		erro <= true;
 	end process;
 
