@@ -21,8 +21,7 @@ architecture CU_arc of CU is
 
 begin
 
-process
- 
+process (Op, Funct)
 begin
 	case Op is
 		-- R-type instruction
@@ -132,9 +131,6 @@ begin
 			Jump			<= '0';
 			Jal				<= '0';
 			ALUControl <= "0110"; --subtrai
-
-		-- TODO: faltou o subi
-		-- ALHO: segundo o livro, o MIPS não tem subi porque é a mesma coisa que addi com negativo, nem opcode tem
 		
 		when others => null;
 
