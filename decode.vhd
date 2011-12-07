@@ -77,10 +77,10 @@ architecture decode_arc of decode is
 			A1	: in std_logic_vector(4 downto 0);
 			A2	: in std_logic_vector(4 downto 0); 
 			A3	: in std_logic_vector(4 downto 0); 
-			WD3	: in std_logic_vector(nbits-1 downto 0); 
+			WD3	: in std_logic_vector(W-1 downto 0); 
 			clk	: in std_logic;
 			We3	: in std_logic; 
-			RD1	: out std_logic_vector(nbits-1 downto 0); 
+			RD1	: out std_logic_vector(W-1 downto 0); 
 			RD2	: out std_logic_vector(W-1 downto 0);
 			reset : in std_logic
 		);

@@ -348,7 +348,10 @@ writeback_0: Writeback port map(clk, RegWriteM_W, MemtoRegM_W, W_RegWriteW, AluO
 
 process(clk)
 begin 
-	WriteDataM		<= M_WriteDataM;
+	WriteDataM	<= M_WriteDataM;
+	PCF 		<= F_PCFF;
+	ALUOutM		<= M_AluOutM;
+	--MemWriteM	<= M_MemWriteM; TODO: Passar MemWrite do Memory para fora
 
 	if clk'EVENT and clk = '1' then
 	
@@ -398,7 +401,8 @@ begin
 		WriteRegM_W		<= M_WriteRegM;
 		ReadDataM_W		<= M_ReadDataM;
 
-
+		-- TO MIPS
+		
 
 
 	end if;

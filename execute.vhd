@@ -87,6 +87,7 @@ begin
 	-- RegFile
 	WriteDataE	<= RD2D;
 	WriteRegE 	<= RtD when RegDstD = "00" else RdD; -- outro mux
+	RegWriteE <= RegWriteD;
 
 	DataE <= DataD;
 
