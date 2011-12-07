@@ -82,15 +82,4 @@ begin
 	
 	DataF <= Data;
 	
-	process(clk) begin
-	
-	if (clk'event and clk = '1') then
-		if reset = '1' then	-- Caso seja reset, coloca 0 no PCSrcD e no Jump (não é branch e nem Jump).
-			PCSrcDAux	<= '0';
-			JumpAux		<= '0';
-		end if;
-	end if;
-	
-	end process;
-	
 end;
