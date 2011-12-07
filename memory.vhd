@@ -15,6 +15,7 @@ entity memory is
 		RegWriteE	: in std_logic;
 		MemtoRegE	: in std_logic;
 		MemWriteE	: in std_logic;
+		MemWriteM	: out std_logic;
 		RegWriteM	: out std_logic;
 		MemtoRegM	: out std_logic;
 
@@ -54,13 +55,6 @@ begin
 	MemtoRegM	<= MemtoRegE;
 	ReadDataM	<= Data;
 	WriteDataM	<= WriteDataE;
-
-	-- Buccolo: MEMORIA: Nao lembro o migue que eh pra dar, ele diz que nao eh pra implementar
-
-
-	-- MemoriaA 	<= AluOutE;
-	-- MemoriaWD	<= WriteDataE;
-	-- MemoriaWE	<= MemWriteE;
-	-- ReadDataM 	<= null; -- ??? 
+	MemWriteM 	<= MemWriteE;
 
 end;

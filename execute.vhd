@@ -89,6 +89,10 @@ begin
 	WriteRegE 	<= RtD when RegDstD = "00" else RdD; -- outro mux
 	RegWriteE <= RegWriteD;
 
+	-- Memory
+	MemtoRegE <= MemtoRegD;
+	MemWriteE <= MemWriteD;
+
 	DataE <= DataD;
 
 end;

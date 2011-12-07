@@ -178,6 +178,7 @@ component memory is
 		RegWriteE	: in std_logic;
 		MemtoRegE	: in std_logic;
 		MemWriteE	: in std_logic;
+		MemWriteM	: out std_logic;
 		RegWriteM	: out std_logic;
 		MemtoRegM	: out std_logic;
 
@@ -308,6 +309,7 @@ signal E_DataE			: std_logic_vector(nbits-1 downto 0);
 signal RegWriteE_M	: std_logic;
 signal MemtoRegE_M	: std_logic;
 signal MemWriteE_M	: std_logic;
+signal M_MemWriteM	: std_logic;
 signal M_RegWriteM	: std_logic;
 signal M_MemtoRegM	: std_logic;
 signal ZeroE_M		: std_logic;
@@ -341,17 +343,13 @@ decode_0: Decode port map(clk, InstructionF_D, PCPlus4F_D, RegWriteW_D, WriteReg
 
 execute_0: Execute port map(clk, RegWriteD_E, MemtoRegD_E, MemWriteD_E, ALUControlD_E, ALUSrcD_E, RegDstD_E, E_RegWriteE, E_MemtoRegE, E_MemWriteE, E_ZeroE, E_AluOutE, RD1D_E, RD2D_E, RtD_E, RdD_E, E_WriteDataE, SignImmD_E, E_WriteRegE, reset, DataD_E, E_DataE);
 
-memory_0: Memory port map(clk, RegWriteE_M, MemtoRegE_M, MemWriteE_M, M_RegWriteM, M_MemtoRegM, ZeroE_M, AluOutE_M, M_AluOutM, WriteDataE_M, WriteRegE_M, M_WriteRegM, M_ReadDataM, DataE_M, M_WriteDataM, reset);
+memory_0: Memory port map(clk, RegWriteE_M, MemtoRegE_M, MemWriteE_M, M_MemWriteM, M_RegWriteM, M_MemtoRegM, ZeroE_M, AluOutE_M, M_AluOutM, WriteDataE_M, WriteRegE_M, M_WriteRegM, M_ReadDataM, DataE_M, M_WriteDataM, reset);
 
 writeback_0: Writeback port map(clk, RegWriteM_W, MemtoRegM_W, W_RegWriteW, AluOutM_W, W_ResultW, WriteRegM_W, W_WriteRegW, ReadDataM_W, reset);
 
 
 process(clk)
 begin 
-	WriteDataM	<= M_WriteDataM;
-	PCF 		<= F_PCFF;
-	ALUOutM		<= M_AluOutM;
-	--MemWriteM	<= M_MemWriteM; TODO: Passar MemWrite do Memory para fora
 
 	if clk'EVENT and clk = '1' then
 	
@@ -382,7 +380,7 @@ begin
 		RdD_E			<= D_RdD;
 		SignImmD_E		<= D_SignImmD;
 		DataD_E			<= D_DataD;
-		
+
 		-- TO MEMORY
 		RegWriteE_M		<= E_RegWriteE; 
 		MemtoRegE_M		<= E_MemtoRegE;
@@ -392,7 +390,6 @@ begin
 		WriteDataE_M	<= E_WriteDataE;
 		WriteRegE_M		<= E_WriteRegE;
 		DataE_M			<= E_DataE;
-		
 
 		-- TO WRITEBACK
 		RegWriteM_W 	<= M_RegWriteM;
@@ -402,8 +399,10 @@ begin
 		ReadDataM_W		<= M_ReadDataM;
 
 		-- TO MIPS
-		
-
+		WriteDataM	<= M_WriteDataM;
+		PCF 		<= F_PCFF;
+		ALUOutM		<= M_AluOutM;
+		MemWriteM	<= M_MemWriteM;
 
 	end if;
 end process;

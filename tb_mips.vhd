@@ -87,6 +87,7 @@ begin
 		-- lw $1, 1($0) >>> $0, $1, imediate
 		Instruction <= "100011"&"00000"&"00001"&"0000000000000001";
 		Data <= "10000000000000000000000000000000";
+		assert MemWriteM = '0' report "MEM!";
 		assert PCF = "00000000000000000000000000000100" report "PC NAO FUNCIONA";
 		wait for 100 ns;
 
