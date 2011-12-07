@@ -72,8 +72,8 @@ begin
 	PCJump32	<= PCPlus4(31 downto 28) & PCJump28D; -- Completa o endereço alvo do Jump 
 
 	pcreg	: reg port map(clk, reset, PCLinha, PC);	-- Registrador que passa do PC' para o PCF na subida do relógio
-	beq		: mux2 port map(PCPlus4, PCBranchD, PCSrcDAux, PCAux);	-- Mux que decide se é branch
-	jumpMux	: mux2 port map(PCAux, PCJump32, JumpAux, PCLinha);		-- Mux que decide se é Jump
+	beq		: mux2 port map(PCPlus4, PCBranchD, PCSrcD, PCAux);	-- Mux que decide se é branch
+	jumpMux	: mux2 port map(PCAux, PCJump32, Jump, PCLinha);		-- Mux que decide se é Jump
 	
 	PCFF <= PC;
 	

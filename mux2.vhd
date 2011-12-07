@@ -14,5 +14,5 @@ end mux2;
 
 architecture synth of mux2 is
 begin
-	y <= d0 when s = '0' else d1;
+	y <= d1 when s = '1' else d0;
 end;
