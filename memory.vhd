@@ -33,6 +33,9 @@ entity memory is
 
 		-- Migué de receber a memory direto da entrada do MIPS
 		Data		: in std_logic_vector(31 downto 0);
+
+		-- Saída da escrita
+		WriteDataM	: out std_logic_vector(31 downto 0);
 		
 		-- Reset
 		reset		: in std_logic
@@ -49,10 +52,12 @@ begin
 	WriteRegM	<= WriteRegE;
 	RegWriteM	<= RegWriteE;
 	MemtoRegM	<= MemtoRegE;
+	ReadDataM	<= Data;
+	WriteDataM	<= WriteDataE;
 
 	-- Buccolo: MEMORIA: Nao lembro o migue que eh pra dar, ele diz que nao eh pra implementar
-	-- TODO:  Richard: Done! Só precisa ver se a variável é a certa
-	ReadDataM <= Data;
+
+
 	-- MemoriaA 	<= AluOutE;
 	-- MemoriaWD	<= WriteDataE;
 	-- MemoriaWE	<= MemWriteE;

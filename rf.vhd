@@ -13,7 +13,8 @@ entity RF is generic(W : natural := 32);
 		clk	: in std_logic;
 		We3	: in std_logic; 
 		RD1	: out std_logic_vector(W-1 downto 0); 
-		RD2	: out std_logic_vector(W-1 downto 0)
+		RD2	: out std_logic_vector(W-1 downto 0);
+		reset : in std_logic
 	);
 
 	type RegisterFile is array(W-1 downto 0) of std_logic_vector(W-1 downto 0);
@@ -23,6 +24,7 @@ entity RF is generic(W : natural := 32);
 end RF;
 
 architecture arc of RF is begin
+	
 
 	process(A1, A2)
 	begin 
@@ -46,6 +48,16 @@ architecture arc of RF is begin
 
 	process(clk, We3, A3, WD3)
 	begin 
+		if clk'EVENT and clk = '1' then
+			if reset = '1' then
+				RegFile(0) <= "00000000000000000000000000000100";
+				RegFile(1) <= "00000000000000000000000000000101";
+				RegFile(2) <= "00000000000000000000000000000111";
+				RegFile(3) <= "00000000000000000000000000001000";
+
+			end if;
+		end if;
+
 		-- WRITE
 		-- O conteudo de WD3 escrevemos em A3, se estivermos com We3 (Enable) e rising clock
 		if clk'EVENT and clk = '1' and We3 = '1' then

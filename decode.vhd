@@ -50,7 +50,10 @@ entity decode is
 		PCJump28D	: out std_logic_vector(nbits-5 downto 0);
 		
 		-- Reset
-		reset		: in std_logic
+		reset		: in std_logic;
+
+		DataF		: in std_logic_vector(nbits-1 downto 0);	-- Data de entrada
+		DataD		: out std_logic_vector(nbits-1 downto 0)	-- Data de saída
 
 	);
 end decode;	
@@ -78,7 +81,8 @@ architecture decode_arc of decode is
 			clk	: in std_logic;
 			We3	: in std_logic; 
 			RD1	: out std_logic_vector(nbits-1 downto 0); 
-			RD2	: out std_logic_vector(nbits-1 downto 0)
+			RD2	: out std_logic_vector(W-1 downto 0);
+			reset : in std_logic
 		);
 	end component;
 
@@ -128,8 +132,10 @@ begin
 	A3	<= WriteRegW;
 	WD3	<= ResultW;
 	We3	<= RegWriteW;
+	
+	DataD <= DataF;
 
-	rf_0: RF port map (A1,A2,A3,WD3,clk,We3,RD1,RD2);
+	rf_0: RF port map (A1,A2,A3,WD3,clk,We3,RD1,RD2, reset);
 
 	EqualD <= '1' when RD1 = RD2 else '0';
 	PCSrcD <= BranchD and EqualD; 

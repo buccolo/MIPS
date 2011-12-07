@@ -25,7 +25,10 @@ entity fetch is
 		
 		-- Aux
 		clk			: in std_logic;
-		reset		: in std_logic
+		reset		: in std_logic;
+
+		Data		: in std_logic_vector(nbits-1 downto 0);	-- Data de entrada
+		DataF		: out std_logic_vector(nbits-1 downto 0)	-- Data de saída
 		
 	);
 end fetch;	
@@ -79,7 +82,7 @@ begin
 	PCPlus4 <= PC + 4; -- Calcula a próxima instrução caso não seja beq nem jump
 	FPCPlus4 <= PCPlus4;
 	
-	
+	DataF <= Data;
 	
 	process(clk) begin
 	

@@ -41,7 +41,10 @@ entity execute is
 		WriteRegE	: out std_logic_vector(4 downto 0);
 		
 		-- Reset
-		reset		: in std_logic
+		reset		: in std_logic;
+
+		DataD		: in std_logic_vector(nbits-1 downto 0);	-- Data de entrada
+		DataE		: out std_logic_vector(nbits-1 downto 0)	-- Data de saída
 		
 	);
 end execute;
@@ -84,5 +87,7 @@ begin
 	-- RegFile
 	WriteDataE	<= RD2D;
 	WriteRegE 	<= RtD when RegDstD = "00" else RdD; -- outro mux
+
+	DataE <= DataD;
 
 end;
