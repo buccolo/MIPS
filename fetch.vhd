@@ -63,8 +63,6 @@ signal PC			: std_logic_vector(nbits-1 downto 0);
 signal PCLinha		: std_logic_vector(nbits-1 downto 0);
 signal PCPlus4		: std_logic_vector(nbits-1 downto 0);
 signal PCAux		: std_logic_vector(nbits-1 downto 0);
-signal PCSrcDAux 	: std_logic := PCSrcD;
-signal JumpAux		: std_logic := Jump;
 signal PCJump32		: std_logic_vector(nbits-1 downto 0);
 
 begin
