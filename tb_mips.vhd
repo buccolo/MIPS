@@ -62,6 +62,7 @@ signal MemWriteM	: std_logic;
 -- 000100 00000 01010 0000 0000 0010 0000 |
 ------------------------------------------+
 
+
 -- J 26-BIT-IMEDIATE ----------------+
 -- ----------------------------------|
 -- OP     26 BIT IMEDIATE            |
@@ -86,7 +87,7 @@ begin
 
 		-- lw $1, 1($0) >>> $0, $1, imediate
 		Instruction <= "100011"&"00000"&"00001"&"0000000000000001";
-		Data <= "10000000000000000000000000000000";
+		Data <= "00000000000000000000000000000000";
 		assert MemWriteM = '0' report "MEM!";
 		assert PCF = "00000000000000000000000000000100" report "PC NAO FUNCIONA";
 		wait for 100 ns;
@@ -111,7 +112,14 @@ begin
 		-- and $5, $3, $2 >>> $3, $2, $5
 		Instruction <= "000000"&"00011"&"00010"&"00101"&"00000"&"100100";
 		assert PCF = "00000000000000000000000000010100" report "PC NAO FUNCIONA";
-		wait for 900 ns;
+		wait for 100 ns;
+
+		-- beq $1, $0, 32
+		Instruction <= "000100"&"00001"&"00000"&"0000000000100000";	
+		assert PCF = "00000000000000000000000000010100" report "PC NAO FUNCIONA"; -- TODO	
+		wait for 100 ns;
+
+		wait for 600 ns;
 		erro <= true;
 	end process;
 

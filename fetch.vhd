@@ -69,7 +69,7 @@ signal PCJump32		: std_logic_vector(nbits-1 downto 0);
 
 begin
 
-	PCJump32	<= PCPlus4(31 downto 28) & PCJump28D; -- Completa o endereço alvo do Jump
+	PCJump32	<= PCPlus4(31 downto 28) & PCJump28D; -- Completa o endereço alvo do Jump 
 
 	pcreg	: reg port map(clk, reset, PCLinha, PC);	-- Registrador que passa do PC' para o PCF na subida do relógio
 	beq		: mux2 port map(PCPlus4, PCBranchD, PCSrcDAux, PCAux);	-- Mux que decide se é branch
