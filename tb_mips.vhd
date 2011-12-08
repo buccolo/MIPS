@@ -88,35 +88,36 @@ begin
 		-- lw $1, 1($0) >>> $0, $1, imediate
 		Instruction <= "100011"&"00000"&"00001"&"0000000000000001";
 		Data <= "00000000000000000000000000000000";
-		assert MemWriteM = '0' report "MEM!";
-		assert PCF = "00000000000000000000000000000100" report "PC NAO FUNCIONA";
 		wait for 100 ns;
 
 		-- lw $2, 2($0) 
 		Instruction <= "100011"&"00000"&"00010"&"0000000000000010";
 		Data <= "01111111111111111111111111111111";
-		assert PCF = "00000000000000000000000000001000" report "PC NAO FUNCIONA";
 		wait for 100 ns;
 
 		-- lw $3, 3($0) 
 		Instruction <= "100011"&"00000"&"00011"&"0000000000000011";
 		Data <= "00000000000000001111111111111111";
-		assert PCF = "00000000000000000000000000001100" report "PC NAO FUNCIONA";
 		wait for 100 ns;
 
 		-- add $4, $1, $2
 		Instruction <= "000000"&"00001"&"00010"&"00100"&"00000"&"100000";
-		assert PCF = "00000000000000000000000000010000" report "PC NAO FUNCIONA";
 		wait for 100 ns;
 
 		-- and $5, $3, $2 >>> $3, $2, $5
 		Instruction <= "000000"&"00011"&"00010"&"00101"&"00000"&"100100";
-		assert PCF = "00000000000000000000000000010100" report "PC NAO FUNCIONA";
 		wait for 100 ns;
 
 		-- beq $1, $0, 32
-		Instruction <= "000100"&"00001"&"00000"&"0000000000100000";	
-		assert PCF = "00000000000000000000000000010100" report "PC NAO FUNCIONA"; -- TODO	
+		Instruction <= "000100"&"00001"&"00000"&"0000000000100000";		
+		wait for 100 ns;
+
+		-- sw $1, 32($0)
+		Instruction <= "101011"&"00000"&"00001"&"0000000000100000";	
+		wait for 100 ns;
+
+		-- jal 16
+		Instruction <= "000011"&"00000000000000000000010000";		
 		wait for 100 ns;
 
 		wait for 600 ns;

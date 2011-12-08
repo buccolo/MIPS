@@ -1,0 +1,70 @@
+[timestart] 417500000
+[size] 1280 750
+[pos] -1 -1
+*-27.567577 800000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.tb_mips.
+[treeopen] top.tb_mips.mips_0.
+[treeopen] top.tb_mips.mips_0.fetch_0.
+@28
+top.tb_mips.clk
+@22
+#{top.tb_mips.instruction[31:0]} top.tb_mips.instruction[31] top.tb_mips.instruction[30] top.tb_mips.instruction[29] top.tb_mips.instruction[28] top.tb_mips.instruction[27] top.tb_mips.instruction[26] top.tb_mips.instruction[25] top.tb_mips.instruction[24] top.tb_mips.instruction[23] top.tb_mips.instruction[22] top.tb_mips.instruction[21] top.tb_mips.instruction[20] top.tb_mips.instruction[19] top.tb_mips.instruction[18] top.tb_mips.instruction[17] top.tb_mips.instruction[16] top.tb_mips.instruction[15] top.tb_mips.instruction[14] top.tb_mips.instruction[13] top.tb_mips.instruction[12] top.tb_mips.instruction[11] top.tb_mips.instruction[10] top.tb_mips.instruction[9] top.tb_mips.instruction[8] top.tb_mips.instruction[7] top.tb_mips.instruction[6] top.tb_mips.instruction[5] top.tb_mips.instruction[4] top.tb_mips.instruction[3] top.tb_mips.instruction[2] top.tb_mips.instruction[1] top.tb_mips.instruction[0]
+#{top.tb_mips.aluoutm[31:0]} top.tb_mips.aluoutm[31] top.tb_mips.aluoutm[30] top.tb_mips.aluoutm[29] top.tb_mips.aluoutm[28] top.tb_mips.aluoutm[27] top.tb_mips.aluoutm[26] top.tb_mips.aluoutm[25] top.tb_mips.aluoutm[24] top.tb_mips.aluoutm[23] top.tb_mips.aluoutm[22] top.tb_mips.aluoutm[21] top.tb_mips.aluoutm[20] top.tb_mips.aluoutm[19] top.tb_mips.aluoutm[18] top.tb_mips.aluoutm[17] top.tb_mips.aluoutm[16] top.tb_mips.aluoutm[15] top.tb_mips.aluoutm[14] top.tb_mips.aluoutm[13] top.tb_mips.aluoutm[12] top.tb_mips.aluoutm[11] top.tb_mips.aluoutm[10] top.tb_mips.aluoutm[9] top.tb_mips.aluoutm[8] top.tb_mips.aluoutm[7] top.tb_mips.aluoutm[6] top.tb_mips.aluoutm[5] top.tb_mips.aluoutm[4] top.tb_mips.aluoutm[3] top.tb_mips.aluoutm[2] top.tb_mips.aluoutm[1] top.tb_mips.aluoutm[0]
+@c00022
+#{top.tb_mips.pcf[31:0]} top.tb_mips.pcf[31] top.tb_mips.pcf[30] top.tb_mips.pcf[29] top.tb_mips.pcf[28] top.tb_mips.pcf[27] top.tb_mips.pcf[26] top.tb_mips.pcf[25] top.tb_mips.pcf[24] top.tb_mips.pcf[23] top.tb_mips.pcf[22] top.tb_mips.pcf[21] top.tb_mips.pcf[20] top.tb_mips.pcf[19] top.tb_mips.pcf[18] top.tb_mips.pcf[17] top.tb_mips.pcf[16] top.tb_mips.pcf[15] top.tb_mips.pcf[14] top.tb_mips.pcf[13] top.tb_mips.pcf[12] top.tb_mips.pcf[11] top.tb_mips.pcf[10] top.tb_mips.pcf[9] top.tb_mips.pcf[8] top.tb_mips.pcf[7] top.tb_mips.pcf[6] top.tb_mips.pcf[5] top.tb_mips.pcf[4] top.tb_mips.pcf[3] top.tb_mips.pcf[2] top.tb_mips.pcf[1] top.tb_mips.pcf[0]
+@28
+top.tb_mips.pcf[31]
+top.tb_mips.pcf[30]
+top.tb_mips.pcf[29]
+top.tb_mips.pcf[28]
+top.tb_mips.pcf[27]
+top.tb_mips.pcf[26]
+top.tb_mips.pcf[25]
+top.tb_mips.pcf[24]
+top.tb_mips.pcf[23]
+top.tb_mips.pcf[22]
+top.tb_mips.pcf[21]
+top.tb_mips.pcf[20]
+top.tb_mips.pcf[19]
+top.tb_mips.pcf[18]
+top.tb_mips.pcf[17]
+top.tb_mips.pcf[16]
+top.tb_mips.pcf[15]
+top.tb_mips.pcf[14]
+top.tb_mips.pcf[13]
+top.tb_mips.pcf[12]
+top.tb_mips.pcf[11]
+top.tb_mips.pcf[10]
+top.tb_mips.pcf[9]
+top.tb_mips.pcf[8]
+top.tb_mips.pcf[7]
+top.tb_mips.pcf[6]
+top.tb_mips.pcf[5]
+top.tb_mips.pcf[4]
+top.tb_mips.pcf[3]
+top.tb_mips.pcf[2]
+top.tb_mips.pcf[1]
+top.tb_mips.pcf[0]
+@1401200
+-group_end
+@22
+#{top.tb_mips.data[31:0]} top.tb_mips.data[31] top.tb_mips.data[30] top.tb_mips.data[29] top.tb_mips.data[28] top.tb_mips.data[27] top.tb_mips.data[26] top.tb_mips.data[25] top.tb_mips.data[24] top.tb_mips.data[23] top.tb_mips.data[22] top.tb_mips.data[21] top.tb_mips.data[20] top.tb_mips.data[19] top.tb_mips.data[18] top.tb_mips.data[17] top.tb_mips.data[16] top.tb_mips.data[15] top.tb_mips.data[14] top.tb_mips.data[13] top.tb_mips.data[12] top.tb_mips.data[11] top.tb_mips.data[10] top.tb_mips.data[9] top.tb_mips.data[8] top.tb_mips.data[7] top.tb_mips.data[6] top.tb_mips.data[5] top.tb_mips.data[4] top.tb_mips.data[3] top.tb_mips.data[2] top.tb_mips.data[1] top.tb_mips.data[0]
+@28
+top.tb_mips.memwritem
+top.tb_mips.mips_0.decode_0.branchd
+top.tb_mips.mips_0.decode_0.pcsrcd
+@22
+#{top.tb_mips.mips_0.decode_0.pcbranchd[31:0]} top.tb_mips.mips_0.decode_0.pcbranchd[31] top.tb_mips.mips_0.decode_0.pcbranchd[30] top.tb_mips.mips_0.decode_0.pcbranchd[29] top.tb_mips.mips_0.decode_0.pcbranchd[28] top.tb_mips.mips_0.decode_0.pcbranchd[27] top.tb_mips.mips_0.decode_0.pcbranchd[26] top.tb_mips.mips_0.decode_0.pcbranchd[25] top.tb_mips.mips_0.decode_0.pcbranchd[24] top.tb_mips.mips_0.decode_0.pcbranchd[23] top.tb_mips.mips_0.decode_0.pcbranchd[22] top.tb_mips.mips_0.decode_0.pcbranchd[21] top.tb_mips.mips_0.decode_0.pcbranchd[20] top.tb_mips.mips_0.decode_0.pcbranchd[19] top.tb_mips.mips_0.decode_0.pcbranchd[18] top.tb_mips.mips_0.decode_0.pcbranchd[17] top.tb_mips.mips_0.decode_0.pcbranchd[16] top.tb_mips.mips_0.decode_0.pcbranchd[15] top.tb_mips.mips_0.decode_0.pcbranchd[14] top.tb_mips.mips_0.decode_0.pcbranchd[13] top.tb_mips.mips_0.decode_0.pcbranchd[12] top.tb_mips.mips_0.decode_0.pcbranchd[11] top.tb_mips.mips_0.decode_0.pcbranchd[10] top.tb_mips.mips_0.decode_0.pcbranchd[9] top.tb_mips.mips_0.decode_0.pcbranchd[8] top.tb_mips.mips_0.decode_0.pcbranchd[7] top.tb_mips.mips_0.decode_0.pcbranchd[6] top.tb_mips.mips_0.decode_0.pcbranchd[5] top.tb_mips.mips_0.decode_0.pcbranchd[4] top.tb_mips.mips_0.decode_0.pcbranchd[3] top.tb_mips.mips_0.decode_0.pcbranchd[2] top.tb_mips.mips_0.decode_0.pcbranchd[1] top.tb_mips.mips_0.decode_0.pcbranchd[0]
+@28
+top.tb_mips.mips_0.fetch_0.pcsrcd
+@22
+#{top.tb_mips.mips_0.fetch_0.pc[31:0]} top.tb_mips.mips_0.fetch_0.pc[31] top.tb_mips.mips_0.fetch_0.pc[30] top.tb_mips.mips_0.fetch_0.pc[29] top.tb_mips.mips_0.fetch_0.pc[28] top.tb_mips.mips_0.fetch_0.pc[27] top.tb_mips.mips_0.fetch_0.pc[26] top.tb_mips.mips_0.fetch_0.pc[25] top.tb_mips.mips_0.fetch_0.pc[24] top.tb_mips.mips_0.fetch_0.pc[23] top.tb_mips.mips_0.fetch_0.pc[22] top.tb_mips.mips_0.fetch_0.pc[21] top.tb_mips.mips_0.fetch_0.pc[20] top.tb_mips.mips_0.fetch_0.pc[19] top.tb_mips.mips_0.fetch_0.pc[18] top.tb_mips.mips_0.fetch_0.pc[17] top.tb_mips.mips_0.fetch_0.pc[16] top.tb_mips.mips_0.fetch_0.pc[15] top.tb_mips.mips_0.fetch_0.pc[14] top.tb_mips.mips_0.fetch_0.pc[13] top.tb_mips.mips_0.fetch_0.pc[12] top.tb_mips.mips_0.fetch_0.pc[11] top.tb_mips.mips_0.fetch_0.pc[10] top.tb_mips.mips_0.fetch_0.pc[9] top.tb_mips.mips_0.fetch_0.pc[8] top.tb_mips.mips_0.fetch_0.pc[7] top.tb_mips.mips_0.fetch_0.pc[6] top.tb_mips.mips_0.fetch_0.pc[5] top.tb_mips.mips_0.fetch_0.pc[4] top.tb_mips.mips_0.fetch_0.pc[3] top.tb_mips.mips_0.fetch_0.pc[2] top.tb_mips.mips_0.fetch_0.pc[1] top.tb_mips.mips_0.fetch_0.pc[0]
+@23
+#{top.tb_mips.mips_0.fetch_0.pclinha[31:0]} top.tb_mips.mips_0.fetch_0.pclinha[31] top.tb_mips.mips_0.fetch_0.pclinha[30] top.tb_mips.mips_0.fetch_0.pclinha[29] top.tb_mips.mips_0.fetch_0.pclinha[28] top.tb_mips.mips_0.fetch_0.pclinha[27] top.tb_mips.mips_0.fetch_0.pclinha[26] top.tb_mips.mips_0.fetch_0.pclinha[25] top.tb_mips.mips_0.fetch_0.pclinha[24] top.tb_mips.mips_0.fetch_0.pclinha[23] top.tb_mips.mips_0.fetch_0.pclinha[22] top.tb_mips.mips_0.fetch_0.pclinha[21] top.tb_mips.mips_0.fetch_0.pclinha[20] top.tb_mips.mips_0.fetch_0.pclinha[19] top.tb_mips.mips_0.fetch_0.pclinha[18] top.tb_mips.mips_0.fetch_0.pclinha[17] top.tb_mips.mips_0.fetch_0.pclinha[16] top.tb_mips.mips_0.fetch_0.pclinha[15] top.tb_mips.mips_0.fetch_0.pclinha[14] top.tb_mips.mips_0.fetch_0.pclinha[13] top.tb_mips.mips_0.fetch_0.pclinha[12] top.tb_mips.mips_0.fetch_0.pclinha[11] top.tb_mips.mips_0.fetch_0.pclinha[10] top.tb_mips.mips_0.fetch_0.pclinha[9] top.tb_mips.mips_0.fetch_0.pclinha[8] top.tb_mips.mips_0.fetch_0.pclinha[7] top.tb_mips.mips_0.fetch_0.pclinha[6] top.tb_mips.mips_0.fetch_0.pclinha[5] top.tb_mips.mips_0.fetch_0.pclinha[4] top.tb_mips.mips_0.fetch_0.pclinha[3] top.tb_mips.mips_0.fetch_0.pclinha[2] top.tb_mips.mips_0.fetch_0.pclinha[1] top.tb_mips.mips_0.fetch_0.pclinha[0]
+@22
+#{top.tb_mips.mips_0.fetch_0.pcplus4[31:0]} top.tb_mips.mips_0.fetch_0.pcplus4[31] top.tb_mips.mips_0.fetch_0.pcplus4[30] top.tb_mips.mips_0.fetch_0.pcplus4[29] top.tb_mips.mips_0.fetch_0.pcplus4[28] top.tb_mips.mips_0.fetch_0.pcplus4[27] top.tb_mips.mips_0.fetch_0.pcplus4[26] top.tb_mips.mips_0.fetch_0.pcplus4[25] top.tb_mips.mips_0.fetch_0.pcplus4[24] top.tb_mips.mips_0.fetch_0.pcplus4[23] top.tb_mips.mips_0.fetch_0.pcplus4[22] top.tb_mips.mips_0.fetch_0.pcplus4[21] top.tb_mips.mips_0.fetch_0.pcplus4[20] top.tb_mips.mips_0.fetch_0.pcplus4[19] top.tb_mips.mips_0.fetch_0.pcplus4[18] top.tb_mips.mips_0.fetch_0.pcplus4[17] top.tb_mips.mips_0.fetch_0.pcplus4[16] top.tb_mips.mips_0.fetch_0.pcplus4[15] top.tb_mips.mips_0.fetch_0.pcplus4[14] top.tb_mips.mips_0.fetch_0.pcplus4[13] top.tb_mips.mips_0.fetch_0.pcplus4[12] top.tb_mips.mips_0.fetch_0.pcplus4[11] top.tb_mips.mips_0.fetch_0.pcplus4[10] top.tb_mips.mips_0.fetch_0.pcplus4[9] top.tb_mips.mips_0.fetch_0.pcplus4[8] top.tb_mips.mips_0.fetch_0.pcplus4[7] top.tb_mips.mips_0.fetch_0.pcplus4[6] top.tb_mips.mips_0.fetch_0.pcplus4[5] top.tb_mips.mips_0.fetch_0.pcplus4[4] top.tb_mips.mips_0.fetch_0.pcplus4[3] top.tb_mips.mips_0.fetch_0.pcplus4[2] top.tb_mips.mips_0.fetch_0.pcplus4[1] top.tb_mips.mips_0.fetch_0.pcplus4[0]
+#{top.tb_mips.mips_0.fetch_0.pcbranchd[31:0]} top.tb_mips.mips_0.fetch_0.pcbranchd[31] top.tb_mips.mips_0.fetch_0.pcbranchd[30] top.tb_mips.mips_0.fetch_0.pcbranchd[29] top.tb_mips.mips_0.fetch_0.pcbranchd[28] top.tb_mips.mips_0.fetch_0.pcbranchd[27] top.tb_mips.mips_0.fetch_0.pcbranchd[26] top.tb_mips.mips_0.fetch_0.pcbranchd[25] top.tb_mips.mips_0.fetch_0.pcbranchd[24] top.tb_mips.mips_0.fetch_0.pcbranchd[23] top.tb_mips.mips_0.fetch_0.pcbranchd[22] top.tb_mips.mips_0.fetch_0.pcbranchd[21] top.tb_mips.mips_0.fetch_0.pcbranchd[20] top.tb_mips.mips_0.fetch_0.pcbranchd[19] top.tb_mips.mips_0.fetch_0.pcbranchd[18] top.tb_mips.mips_0.fetch_0.pcbranchd[17] top.tb_mips.mips_0.fetch_0.pcbranchd[16] top.tb_mips.mips_0.fetch_0.pcbranchd[15] top.tb_mips.mips_0.fetch_0.pcbranchd[14] top.tb_mips.mips_0.fetch_0.pcbranchd[13] top.tb_mips.mips_0.fetch_0.pcbranchd[12] top.tb_mips.mips_0.fetch_0.pcbranchd[11] top.tb_mips.mips_0.fetch_0.pcbranchd[10] top.tb_mips.mips_0.fetch_0.pcbranchd[9] top.tb_mips.mips_0.fetch_0.pcbranchd[8] top.tb_mips.mips_0.fetch_0.pcbranchd[7] top.tb_mips.mips_0.fetch_0.pcbranchd[6] top.tb_mips.mips_0.fetch_0.pcbranchd[5] top.tb_mips.mips_0.fetch_0.pcbranchd[4] top.tb_mips.mips_0.fetch_0.pcbranchd[3] top.tb_mips.mips_0.fetch_0.pcbranchd[2] top.tb_mips.mips_0.fetch_0.pcbranchd[1] top.tb_mips.mips_0.fetch_0.pcbranchd[0]
+#{top.tb_mips.mips_0.fetch_0.pcaux[31:0]} top.tb_mips.mips_0.fetch_0.pcaux[31] top.tb_mips.mips_0.fetch_0.pcaux[30] top.tb_mips.mips_0.fetch_0.pcaux[29] top.tb_mips.mips_0.fetch_0.pcaux[28] top.tb_mips.mips_0.fetch_0.pcaux[27] top.tb_mips.mips_0.fetch_0.pcaux[26] top.tb_mips.mips_0.fetch_0.pcaux[25] top.tb_mips.mips_0.fetch_0.pcaux[24] top.tb_mips.mips_0.fetch_0.pcaux[23] top.tb_mips.mips_0.fetch_0.pcaux[22] top.tb_mips.mips_0.fetch_0.pcaux[21] top.tb_mips.mips_0.fetch_0.pcaux[20] top.tb_mips.mips_0.fetch_0.pcaux[19] top.tb_mips.mips_0.fetch_0.pcaux[18] top.tb_mips.mips_0.fetch_0.pcaux[17] top.tb_mips.mips_0.fetch_0.pcaux[16] top.tb_mips.mips_0.fetch_0.pcaux[15] top.tb_mips.mips_0.fetch_0.pcaux[14] top.tb_mips.mips_0.fetch_0.pcaux[13] top.tb_mips.mips_0.fetch_0.pcaux[12] top.tb_mips.mips_0.fetch_0.pcaux[11] top.tb_mips.mips_0.fetch_0.pcaux[10] top.tb_mips.mips_0.fetch_0.pcaux[9] top.tb_mips.mips_0.fetch_0.pcaux[8] top.tb_mips.mips_0.fetch_0.pcaux[7] top.tb_mips.mips_0.fetch_0.pcaux[6] top.tb_mips.mips_0.fetch_0.pcaux[5] top.tb_mips.mips_0.fetch_0.pcaux[4] top.tb_mips.mips_0.fetch_0.pcaux[3] top.tb_mips.mips_0.fetch_0.pcaux[2] top.tb_mips.mips_0.fetch_0.pcaux[1] top.tb_mips.mips_0.fetch_0.pcaux[0]
+[pattern_trace] 1
+[pattern_trace] 0
